@@ -5,9 +5,11 @@ namespace heracles_api.Context
 {
     public class HeraclesContext : DbContext
     {
-        public DbSet<Exercise>? Exercise { get; set; }
-/*        public DbSet<Categoria>? Categorias { get; set; }
-*/        public HeraclesContext(DbContextOptions<HeraclesContext> options) : base(options)
+        public DbSet<Exercise>? Exercises { get; set; }
+        public DbSet<Performance>? Performances { get; set; }
+        public DbSet<User>? Users { get; set; }
+
+        public HeraclesContext(DbContextOptions<HeraclesContext> options) : base(options)
         {
         }
     }
