@@ -7,46 +7,46 @@ namespace Exercices.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class ExercisesController : ControllerBase
     {
         private readonly HeraclesContext _heraclesContext;
 
-        public UsersController(HeraclesContext heraclesContext)
+        public ExercisesController(HeraclesContext heraclesContext)
         {
             _heraclesContext = heraclesContext;
         }
         
-        [HttpGet("{id:int}", Name = "GetUsers")]
-        public ActionResult<User> Get(int id)
+        [HttpGet("{id:int}", Name = "GetExercises")]
+        public ActionResult<Exercise> Get(int id)
         {
-            var categoria = _heraclesContext.Users?.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            var categoria = _heraclesContext.Exercises?.AsNoTracking().FirstOrDefault(x => x.Id == id);
             return categoria is null ? NotFound() : categoria;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<User>> Get()
+        public ActionResult<IEnumerable<Exercise>> Get()
         {
-            var exs = _heraclesContext.Users?.AsNoTracking().ToList();
+            var exs = _heraclesContext.Exercises?.AsNoTracking().ToList();
             return exs is null ? NotFound() : exs;
         }
 
         [HttpPost]
-        public ActionResult<User> Post(User ex)
+        public ActionResult<Exercise> Post(Exercise ex)
         {
             if(ex is null) return BadRequest();
 
-            _heraclesContext.Users?.Add(ex);
+            _heraclesContext.Exercises?.Add(ex);
             _heraclesContext.SaveChanges();
 
-            return new CreatedAtRouteResult("GetUser", new { id = ex.Id, ex});
+            return new CreatedAtRouteResult("GetExercise", new { id = ex.Id, ex});
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult<User> Put(int id, User ex)
+        public ActionResult<Exercise> Put(int id, Exercise ex)
         {
             if(ex is null || ex.Id != id) return BadRequest();
 
-            _heraclesContext.Entry<User>(ex).State = EntityState.Modified;
+            _heraclesContext.Entry<Exercise>(ex).State = EntityState.Modified;
             _heraclesContext.SaveChanges();
 
             return Ok(ex);
@@ -55,11 +55,11 @@ namespace Exercices.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
-            var categoria = _heraclesContext.Users?.FirstOrDefault(c => c.Id == id);
+            var categoria = _heraclesContext.Exercises?.FirstOrDefault(c => c.Id == id);
 
             if(categoria is null) return NotFound();
 
-            _heraclesContext.Users?.Remove(categoria);
+            _heraclesContext.Exercises?.Remove(categoria);
             _heraclesContext.SaveChanges();
 
             return Ok(categoria);
