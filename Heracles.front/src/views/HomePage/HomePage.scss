@@ -1,0 +1,44 @@
+.button {
+    display: inline-block;
+    padding: 0.3em 1.2em;
+    margin: 0 0.1em 0.1em 0;
+    box-sizing: border-box;
+    border: solid 2px #9f8548;
+    border-radius: 150px;
+    color: #9f8548;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 4%;
+    transition: .3s ease-in-out;
+}
+
+.button:hover {
+    border-color: #9f8548;
+    background-color: #9f8548;
+    color: black;
+
+}
+
+@media all and (max-width:30em) {
+    a.button4 {
+        display: block;
+        margin: 0.2em auto;
+    }
+}
+
+img {
+    width: 150px;
+}
+
+.gallery {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 3%;
+}
+
+.section{
+    width: 25%;
+    height: 25em;
+    border-radius: 15px;
+    border: solid 2px #9f8548;
+}
