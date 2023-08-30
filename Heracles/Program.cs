@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 using heracles_api.Context;
 using Microsoft.EntityFrameworkCore;
  
+// :D
+// :D
+// :D
 
 var builder = WebApplication.CreateBuilder(args);
 
