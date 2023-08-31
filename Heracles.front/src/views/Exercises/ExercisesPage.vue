@@ -1,15 +1,14 @@
 <template>
-    <a class="button">Add a category</a>
-    <router-link :to="`/exercises/${label}`" v-for="t in types" :key="t.id">
-        <div class="typeBlock">
-            <h1>{{ t.label }}</h1>
-            <!-- <div class="gallery">
+    
+    <a class="button">Add an exercise</a>
+    <router-link :to="`/exercises/${label}`" v-for="e in exercises" :key="e.id" class="typeBlock">
+        <h1>{{ e.label }}</h1>
+        <!-- <div class="gallery">
             <div class="section" v-for="e in exercises" :key="e.id">
                 <h1>{{ e.label }}</h1>
                 <img src="../../assets/logo.png" />
             </div>
         </div> -->
-        </div>
     </router-link>
 </template>
 
@@ -54,7 +53,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-@import url('./HomePage.scss');
+@import url('./ExercisesPage.scss');
 
 template {
     margin: 0 10%;

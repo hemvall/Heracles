@@ -2,10 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using heracles_api.Context;
 using Microsoft.EntityFrameworkCore;
- 
-// :D
-// :D
-// :D
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors(options => options.AllowAnyOrigin());
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
