@@ -1,7 +1,24 @@
 <template>
     
-    <a class="button">Add an exercise</a>
-    <router-link :to="`/exercises/${label}`" v-for="e in exercises" :key="e.id" class="typeBlock">
+    <a class="button" @click="formExerciseOpen = !formExerciseOpen">Add an exercise</a>
+    <div v-if="formExerciseOpen">
+        <p>Nom de l'exercice</p>
+        <input v-model="label" type="text" />
+        <p>PR sur l'exercice</p>
+        <input v-model="pr" type="number" />
+        <p>Display position</p>
+        <input v-model="displayPosition" type="number" />
+        <p>Type de label</p>
+        <select v-model="typeId">
+            <option v-for="t in types" :key="t.id" :value="t.id">{{ t.label }}</option>
+        </select>
+        <p>Unité de mesure</p>
+        <input v-model="unit" type="text" />
+
+        <button @click="createExercise">Valider</button>
+        <button @click="formExerciseOpen = !formExerciseOpen">Fermer</button>
+    </div>
+    <router-link :to="`/exercise/detail/${e.id}`" v-for="e in exerciseFromType" :key="e.id" class="typeBlock">
         <h1>{{ e.label }}</h1>
         <!-- <div class="gallery">
             <div class="section" v-for="e in exercises" :key="e.id">
@@ -24,6 +41,13 @@ export default defineComponent({
         return {
             exercises: [],
             types: [],
+            formExerciseOpen: false,
+            label: '',
+            pr: 1,
+            userId: 1,
+            displayPosition: 1,
+            typeId: 1,
+            unit: 'kg',
         };
     },
     methods: {
@@ -46,6 +70,33 @@ export default defineComponent({
                     this.loading = false;
                     return;
                 });
+        },
+        createExercise() {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    label: this.label,
+                    pr: this.pr,
+                    displayPosition: this.displayPosition,
+                    user: this.userId,
+                    label: this.label,
+                    typeId: this.typeId
+                })
+            };
+            fetch(`${this.$api}/exercises`, requestOptions)
+                .then(response => {
+                    if (response.ok) { alert("L'exercice a bien été crée") }
+                    else { alert("L'exercice n'a pas été crée") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+            // .then(data => (this.postId = data.id));
+        }
+    },
+    computed: {
+        exerciseFromType(){
+            return this.exercises.filter(e => e.typeId == this.$route.params.typeId)
         }
     }
 }

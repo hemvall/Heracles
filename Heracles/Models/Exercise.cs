@@ -8,6 +8,7 @@ namespace Heracles.Models
     {        
         public int Id { get; set; }
         public int? UserId { get; set; }
+        public int? TypeId { get; set; }
         public int? PR { get; set; }
         public int? DisplayPosition { get; set; }
         public string? Label { get; set; }

@@ -1,6 +1,11 @@
 <template>
-    <a class="button">Add a category</a>
-    <router-link :to="`/exercises/${label}`" v-for="t in types" :key="t.id">
+    <a class="button" @click="formCategoryOpen = !formCategoryOpen">Add a category</a>
+    <div v-if="formCategoryOpen">
+        <input v-model="label" type="text" />
+        <button @click="createCategory">Valider</button>
+        <button @click="formCategoryOpen = !formCategoryOpen">Fermer</button>
+    </div>
+    <router-link :to="`/exercises/${t.id}`" v-for="t in types" :key="t.id">
         <div class="typeBlock">
             <h1>{{ t.label }}</h1>
             <!-- <div class="gallery">
@@ -25,6 +30,9 @@ export default defineComponent({
         return {
             exercises: [],
             types: [],
+            label: '',
+            formCategoryOpen: false,
+
         };
     },
     methods: {
@@ -47,6 +55,23 @@ export default defineComponent({
                     this.loading = false;
                     return;
                 });
+        },
+        createCategory() {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    label: this.label
+                })
+            };
+            fetch(`${this.$api}/exerciseType`, requestOptions)
+                .then(response => {
+                    if (response.ok) { alert("La catégorie a bien été créee") }
+                    else { alert("La catégorie n'a pas été créee") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+            // .then(data => (this.postId = data.id));
         }
     }
 }
