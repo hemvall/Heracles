@@ -1,5 +1,4 @@
 <template>
-    
     <a class="button" @click="formExerciseOpen = !formExerciseOpen">Add an exercise</a>
     <div v-if="formExerciseOpen">
         <p>Nom de l'exercice</p>
@@ -24,22 +23,23 @@
         </router-link>
         <button @click="editExerciseOpen = !editExerciseOpen">Edit</button>
         <div v-if="editExerciseOpen">
-        <p>Nom de l'exercice</p>
-        <input v-model="label" type="text" />
-        <p>PR sur l'exercice</p>
-        <input v-model="pr" type="number" />
-        <p>Display position</p>
-        <input v-model="displayPosition" type="number" />
-        <p>Type de label</p>
-        <select v-model="typeId">
-            <option v-for="t in types" :key="t.id" :value="t.id">{{ t.label }}</option>
-        </select>
-        <p>Unité de mesure</p>
-        <input v-model="unit" type="text" />
-
-        <button @click="editExercise(e.id)">Valider</button>
-        <button @click="editExerciseOpen = !editExerciseOpen">Fermer</button>
-    </div>
+            <p>Nom de l'exercice</p>
+            <input v-model="label" type="text" />
+            <p>PR sur l'exercice</p>
+            <input v-model="pr" type="number" />
+            <p>Display position</p>
+            <input v-model="displayPosition" type="number" />
+            <p>Type de label</p>
+            <select v-model="typeId">
+                <option v-for="t in types" :key="t.id" :value="t.id">{{ t.label }}</option>
+            </select>
+            <p>Unité de mesure</p>
+            <select v-model="unit" type="text">
+                <option v-for="u in units" :key="u.id" :value="u.code"> {{ u.code }}</option>
+            </select>
+            <button @click="editExercise(e.id)">Valider</button>
+            <button @click="editExerciseOpen = !editExerciseOpen">Fermer</button>
+        </div>
     </div>
 </template>
 
@@ -62,7 +62,7 @@ export default defineComponent({
             userId: 1,
             displayPosition: 1,
             typeId: 1,
-            unit: 'kg',
+            unit: '',
         };
     },
     methods: {
@@ -82,6 +82,13 @@ export default defineComponent({
                 .then(r => r.json())
                 .then(json => {
                     this.exercises = json;
+                    this.loading = false;
+                    return;
+                });
+            fetch(`${this.$api}/units`)
+                .then(r => r.json())
+                .then(json => {
+                    this.units = json;
                     this.loading = false;
                     return;
                 });
@@ -133,7 +140,7 @@ export default defineComponent({
         }
     },
     computed: {
-        exerciseFromType(){
+        exerciseFromType() {
             return this.exercises.filter(e => e.typeId == this.$route.params.typeId)
         }
     }
