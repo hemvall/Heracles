@@ -16,9 +16,9 @@
     </div>
     <div class="typeBlock">
         <h1>{{ exercise.label }}</h1>
-        <div v-for="p in performances" :key="p.id">
-            <p>{{ p.weight }}</p><br />
-            <button @click="editPerfOpen = !editPerfOpen" style="color: black;">Edit</button>
+        <div v-for="performance in perfFromExercise(this.$route.params.exerciseId)" :key="performance.id">
+            <p>{{ performance.weight }}</p><br />
+            <button @click="editPerfOpen = !editPerfOpen" style="color: black;  ">Edit</button>
             <div v-if="editPerfOpen">
                 <p>Date</p>
                 <input v-model="perfDate" type="date" />
@@ -30,7 +30,7 @@
                 <input v-model="Sets" type="number" />
                 <p>Score</p>
                 <input v-model="Score" type="number" />
-                <button @click="editPerformance(p.id)">Valider</button>
+                <button @click="editPerformance(performance.id)">Valider</button>
                 <button @click="formExerciseOpen = !formExerciseOpen">Fermer</button>
             </div>
         </div>
@@ -126,6 +126,9 @@ export default defineComponent({
                 })
                 .then(response => response.json())
             // .then(data => (this.postId = data.id));
+        },
+        perfFromExercise(eId) {
+            return this.performances.filter(p => p.exerciseId == eId)
         }
     }
 }
@@ -143,7 +146,8 @@ template {
     color: white;
 }
 
-input, button {
+input,
+button {
     color: black;
 }
 </style>

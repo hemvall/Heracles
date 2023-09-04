@@ -30,11 +30,23 @@ namespace Users.Controllers
             return exs is null ? NotFound() : exs;
         }
 
+        [HttpPost("Authentification")]
+        public ActionResult<User> Authentification(User ex)
+        {
+            if (ex is null) return BadRequest();
+
+            User usr = _heraclesContext.Users.FirstOrDefault(x => x.Mail == ex.Mail && x.Password == ex.Password);
+
+            if (usr is null) return NotFound();
+
+            return usr;
+        }
+
+
         [HttpPost]
         public ActionResult<User> Post(User ex)
         {
             if(ex is null) return BadRequest();
-
             _heraclesContext.Users?.Add(ex);
             _heraclesContext.SaveChanges();
 
