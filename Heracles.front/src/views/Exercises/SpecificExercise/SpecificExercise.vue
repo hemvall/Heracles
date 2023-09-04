@@ -12,12 +12,28 @@
         <p>Score</p>
         <input v-model="Score" type="number" />
         <button @click="createPerformance">Valider</button>
-        <button @click="formExerciseOpen = !formExerciseOpen">Fermer</button>
+        <button @click="formPerformanceOpen = !formPerformanceOpen">Fermer</button>
     </div>
     <div class="typeBlock">
         <h1>{{ exercise.label }}</h1>
-        <p v-for="p in performances" :key="p.id">{{ p.weight }}</p><br />
-
+        <div v-for="p in performances" :key="p.id">
+            <p>{{ p.weight }}</p><br />
+            <button @click="editPerfOpen = !editPerfOpen" style="color: black;">Edit</button>
+            <div v-if="editPerfOpen">
+                <p>Date</p>
+                <input v-model="perfDate" type="date" />
+                <p>Weight</p>
+                <input v-model="Weight" type="number" />
+                <p>Reps</p>
+                <input v-model="Reps" type="number" />
+                <p>Sets</p>
+                <input v-model="Sets" type="number" />
+                <p>Score</p>
+                <input v-model="Score" type="number" />
+                <button @click="editPerformance(p.id)">Valider</button>
+                <button @click="formExerciseOpen = !formExerciseOpen">Fermer</button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -34,6 +50,7 @@ export default defineComponent({
             exercise: {},
             performances: [],
             formPerformanceOpen: false,
+            editPerfOpen: false,
             UserId: 1,
             perfDate: new Date().toISOString(),
             Weight: 0,
@@ -85,6 +102,30 @@ export default defineComponent({
                 })
                 .then(response => response.json())
             // .then(data => (this.postId = data.id));
+        },
+        editPerformance(pId) {
+            const requestOptions = {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Id: pId,
+                    ExerciseId: this.$route.params.exerciseId,
+                    UserId: this.UserId,
+                    Date: this.perfDate,
+                    Weight: this.Weight,
+                    Reps: this.Reps,
+                    Sets: this.Sets,
+                    Score: this.Score
+                })
+            };
+            fetch(`${this.$api}/performances/${pId}`, requestOptions)
+                .then(response => {
+                    if (response.ok) { alert("La performance a bien été modifiée") }
+                    else { alert("La performance a été modifiée") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+            // .then(data => (this.postId = data.id));
         }
     }
 }
@@ -96,5 +137,13 @@ export default defineComponent({
 
 template {
     margin: 0 10%;
+}
+
+* {
+    color: white;
+}
+
+input, button {
+    color: black;
 }
 </style>

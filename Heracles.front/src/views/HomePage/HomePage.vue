@@ -1,21 +1,23 @@
 <template>
-    <a class="button" @click="formCategoryOpen = !formCategoryOpen">Add a category</a>
-    <div v-if="formCategoryOpen">
+    <a class="button" @click="addCategoryOpen = !addCategoryOpen">Add a category</a>
+    <div v-if="addCategoryOpen">
         <input v-model="label" type="text" />
         <button @click="createCategory">Valider</button>
-        <button @click="formCategoryOpen = !formCategoryOpen">Fermer</button>
+        <button @click="addCategoryOpen = !addCategoryOpen">Fermer</button>
     </div>
-    <router-link :to="`/exercises/${t.id}`" v-for="t in types" :key="t.id">
-        <div class="typeBlock">
-            <h1>{{ t.label }}</h1>
-            <!-- <div class="gallery">
-            <div class="section" v-for="e in exercises" :key="e.id">
-                <h1>{{ e.label }}</h1>
-                <img src="../../assets/logo.png" />
+    <div v-for="t in types" :key="t.id">
+        <router-link :to="`/exercises/${t.id}`">
+            <div class="typeBlock">
+                <h1>{{ t.label }}</h1>
             </div>
-        </div> -->
+        </router-link>
+        <button @click="editCategoryOpen =! editCategoryOpen">Modifier</button>
+        <div v-if="editCategoryOpen">
+            <input v-model="editLabel" type="text" />
+            <button @click="editCategory(t.id)">Valider</button>
+            <button @click="editCategoryOpen = !editCategoryOpen">Fermer</button>
         </div>
-    </router-link>
+    </div>
 </template>
 
 
@@ -31,8 +33,9 @@ export default defineComponent({
             exercises: [],
             types: [],
             label: '',
-            formCategoryOpen: false,
-
+            editLabel: '',
+            addCategoryOpen: false,
+            editCategoryOpen: false,
         };
     },
     methods: {
@@ -68,6 +71,24 @@ export default defineComponent({
                 .then(response => {
                     if (response.ok) { alert("La catégorie a bien été créee") }
                     else { alert("La catégorie n'a pas été créee") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+            // .then(data => (this.postId = data.id));
+        },
+        editCategory(tId) {
+            const requestOptions = {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: tId,
+                    label: this.editLabel
+                })
+            };
+            fetch(`${this.$api}/exerciseType/${tId}`, requestOptions)
+                .then(response => {
+                    if (response.ok) { alert("La catégorie a bien été modifiée") }
+                    else { alert("La catégorie n'a pas été modifiée") }
                     this.fetchData()
                 })
                 .then(response => response.json())

@@ -18,15 +18,29 @@
         <button @click="createExercise">Valider</button>
         <button @click="formExerciseOpen = !formExerciseOpen">Fermer</button>
     </div>
-    <router-link :to="`/exercise/detail/${e.id}`" v-for="e in exerciseFromType" :key="e.id" class="typeBlock">
-        <h1>{{ e.label }}</h1>
-        <!-- <div class="gallery">
-            <div class="section" v-for="e in exercises" :key="e.id">
-                <h1>{{ e.label }}</h1>
-                <img src="../../assets/logo.png" />
-            </div>
-        </div> -->
-    </router-link>
+    <div v-for="e in exerciseFromType" :key="e.id">
+        <router-link :to="`/exercise/detail/${e.id}`" class="typeBlock">
+            <h1>{{ e.label }}</h1>
+        </router-link>
+        <button @click="editExerciseOpen = !editExerciseOpen">Edit</button>
+        <div v-if="editExerciseOpen">
+        <p>Nom de l'exercice</p>
+        <input v-model="label" type="text" />
+        <p>PR sur l'exercice</p>
+        <input v-model="pr" type="number" />
+        <p>Display position</p>
+        <input v-model="displayPosition" type="number" />
+        <p>Type de label</p>
+        <select v-model="typeId">
+            <option v-for="t in types" :key="t.id" :value="t.id">{{ t.label }}</option>
+        </select>
+        <p>Unité de mesure</p>
+        <input v-model="unit" type="text" />
+
+        <button @click="editExercise(e.id)">Valider</button>
+        <button @click="editExerciseOpen = !editExerciseOpen">Fermer</button>
+    </div>
+    </div>
 </template>
 
 
@@ -42,6 +56,7 @@ export default defineComponent({
             exercises: [],
             types: [],
             formExerciseOpen: false,
+            editExerciseOpen: false,
             label: '',
             pr: 1,
             userId: 1,
@@ -88,6 +103,29 @@ export default defineComponent({
                 .then(response => {
                     if (response.ok) { alert("L'exercice a bien été crée") }
                     else { alert("L'exercice n'a pas été crée") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+            // .then(data => (this.postId = data.id));
+        },
+        editExercise(eId) {
+            const requestOptions = {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: eId,
+                    label: this.label,
+                    pr: this.pr,
+                    displayPosition: this.displayPosition,
+                    user: this.userId,
+                    label: this.label,
+                    typeId: this.typeId
+                })
+            };
+            fetch(`${this.$api}/exercises/${eId}`, requestOptions)
+                .then(response => {
+                    if (response.ok) { alert("L'exercice a bien été modifié") }
+                    else { alert("L'exercice n'a pas été modifié") }
                     this.fetchData()
                 })
                 .then(response => response.json())
