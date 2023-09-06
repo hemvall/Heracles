@@ -5,7 +5,7 @@
         <button @click="createCategory">Valider</button>
         <button @click="addCategoryOpen = !addCategoryOpen">Fermer</button>
     </div>
-    <div v-for="t in types" :key="t.id">
+    <div v-for="t in typesFromUser" :key="t.id">
         <router-link :to="`/exercises/${t.id}`">
             <div class="typeBlock">
                 <h1>{{ t.label }}</h1>
@@ -93,6 +93,11 @@ export default defineComponent({
                 })
                 .then(response => response.json())
             // .then(data => (this.postId = data.id));
+        }
+    },
+    computed: {
+        typesFromUser() {
+            return this.types.filter(e => e.userId == localStorage.getItem('userId'))
         }
     }
 }

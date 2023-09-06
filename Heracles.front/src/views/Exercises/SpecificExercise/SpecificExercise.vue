@@ -128,7 +128,7 @@ export default defineComponent({
             // .then(data => (this.postId = data.id));
         },
         perfFromExercise(eId) {
-            return this.performances.filter(p => p.exerciseId == eId)
+            return this.performances.filter(p => p.exerciseId == eId && p.userId == localStorage.getItem('userId'))
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Heracles.Models
     public class ExerciseType
     {        
         public int Id { get; set; }
+        public int UserId { get; set; }
         public string? Label { get; set; }
     }
 }

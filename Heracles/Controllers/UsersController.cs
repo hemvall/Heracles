@@ -2,7 +2,8 @@ using heracles_api.Context;
 using Heracles.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+/*using BCrypt.Net;
+*/
 namespace Users.Controllers
 {
     [Route("[controller]")]
@@ -42,12 +43,11 @@ namespace Users.Controllers
             return usr;
         }
 
-
         [HttpPost]
         public ActionResult<User> Post(User ex)
         {
             if(ex is null) return BadRequest();
-            _heraclesContext.Users?.Add(ex);
+            
             _heraclesContext.SaveChanges();
 
             return new CreatedAtRouteResult("GetUser", new { id = ex.Id, ex});

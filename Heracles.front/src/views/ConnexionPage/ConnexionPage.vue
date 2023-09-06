@@ -8,6 +8,22 @@
         <p>Password</p>
         <input v-model="password" type="password" />
         <button @click="Authentification">Se connecter</button>
+        <a class="link" @click="openSignUp = !openSignUp">Je n'ai pas encore de compte.</a>
+    </div>
+
+    <div class="inputs" v-if="openSignUp">
+        <div class="title">
+        <h1>Inscription</h1>
+    </div>
+        <p>Prénom</p>
+        <input v-model="name" type="text" />
+        <p>Nom de famille</p>
+        <input v-model="lastName" type="text" />
+        <p>Mail</p>
+        <input v-model="mail" type="text" />
+        <p>Password</p>
+        <input v-model="password" type="password" />
+        <button @click="SignUp">Se connecter</button>
     </div>
 </template>
 
@@ -21,8 +37,11 @@ export default defineComponent({
     },
     data() {
         return {
+            name: '',
+            lastName: '',
             mail: '',
             password: '',
+            openSignUp: false
         };
     },
     methods: {
@@ -60,7 +79,34 @@ export default defineComponent({
                     localStorage.setItem('userName', data.name)
                     localStorage.setItem('userMail', data.mail)
                     localStorage.setItem('userId', data.id)
-                    location.reload()                    
+                    location.reload()
+                })
+        },
+        SignUp() {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: this.name,
+                    lastName: this.lastName,
+                    mail: this.mail,
+                    password: this.password,
+                })
+            };
+            fetch(`${this.$api}/Users`, requestOptions)
+                .then(response => {
+                    if (response.ok) {
+                        alert("Votre compte a bien été crée, vous pouvez vous connecter")
+                        this.openSignUp = false;
+                    }
+                    else { alert("Votre compte n'a pas été crée. Votre mot de passe ou mail.") }
+                    this.fetchData()
+                })
+                .then(data => {
+                    localStorage.setItem('userName', data.name)
+                    localStorage.setItem('userMail', data.mail)
+                    localStorage.setItem('userId', data.id)
+                    location.reload()
                 })
         }
     }

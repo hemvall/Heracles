@@ -8,6 +8,7 @@ namespace Heracles.Models
     {
         public int Id { get; set; }
         public int? LanguageId { get; set; }
+        public int? UserId { get; set; }
         public string? Label { get; set; }
         public string? Code { get; set; }
     }

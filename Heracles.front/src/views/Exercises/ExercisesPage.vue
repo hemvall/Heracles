@@ -141,7 +141,7 @@ export default defineComponent({
     },
     computed: {
         exerciseFromType() {
-            return this.exercises.filter(e => e.typeId == this.$route.params.typeId)
+            return this.exercises.filter(e => e.typeId == this.$route.params.typeId && e.userId == localStorage.getItem('userId'))
         }
     }
 }

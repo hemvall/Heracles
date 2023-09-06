@@ -19,3 +19,12 @@ p {
     color: white;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+.link {
+    cursor: pointer;
+    transition: .4s ease-in-out;
+}
+
+.link:hover{
+    color: aqua;
+}
