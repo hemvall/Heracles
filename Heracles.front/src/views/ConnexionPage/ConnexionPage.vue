@@ -1,29 +1,45 @@
 <template>
-    <div class="title">
-        <h1>Connexion</h1>
+    <div class="titleContainer">
+        <h1 class="title" style="display: flex; justify-content: center; font-size: 36px; margin-top: 5%; color:#9f8548">
+            Heracles</h1>
+            <img class="logo" src="../../assets/logo.png" />
     </div>
-    <div class="inputs">
-        <p>Mail</p>
-        <input v-model="mail" type="text" />
-        <p>Password</p>
-        <input v-model="password" type="password" />
-        <button @click="Authentification">Se connecter</button>
-        <a class="link" @click="openSignUp = !openSignUp">Je n'ai pas encore de compte.</a>
-    </div>
+    <div class="formsContainer">
+        <div class="block">
+            <div class="ml-3">
+                <div class="title" style="margin-top: 7%;">
+                    <h1>Connexion</h1>
+                </div>
+                <div class="inputs">
+                    <p>Mail</p>
+                    <input v-model="mail" type="text" />
+                    <p>Password</p>
+                    <input v-model="password" type="password" /><br />
+                    <button @click="Authentification" class="connectButton">Se connecter</button><br /><br />
+                    <a class="link" @click="openSignUp = !openSignUp">Je n'ai pas encore de compte.</a>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="ml-3">
 
-    <div class="inputs" v-if="openSignUp">
-        <div class="title">
-        <h1>Inscription</h1>
-    </div>
-        <p>Prénom</p>
-        <input v-model="name" type="text" />
-        <p>Nom de famille</p>
-        <input v-model="lastName" type="text" />
-        <p>Mail</p>
-        <input v-model="mail" type="text" />
-        <p>Password</p>
-        <input v-model="password" type="password" />
-        <button @click="SignUp">Se connecter</button>
+                <div class="inputs">
+                    <div class="title">
+                        <h1>Inscription</h1>
+                    </div>
+                    <p>Mail</p>
+                    <input v-model="signupMail" type="text" />
+                    <p>Prénom</p>
+                    <input v-model="name" type="text" />
+                    <p>Nom de famille</p>
+                    <input v-model="lastName" type="text" />
+                    <p>Password</p>
+                    <input v-model="signupPassword" type="password" /><br>
+                    <button @click="SignUp" class="connectButton">Se connecter</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -41,6 +57,8 @@ export default defineComponent({
             lastName: '',
             mail: '',
             password: '',
+            signupPassword: '',
+            signupMail: '',
             openSignUp: false
         };
     },
@@ -89,8 +107,8 @@ export default defineComponent({
                 body: JSON.stringify({
                     name: this.name,
                     lastName: this.lastName,
-                    mail: this.mail,
-                    password: this.password,
+                    mail: this.signupMail,
+                    password: this.signupPassword,
                 })
             };
             fetch(`${this.$api}/Users`, requestOptions)
@@ -116,4 +134,8 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import url('./ConnexionPage.scss');
+
+.ml-3 {
+    margin-left: 5%;
+}
 </style>

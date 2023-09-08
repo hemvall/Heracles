@@ -7,8 +7,10 @@ import router from './router'
 // import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 const app = createApp(App)
+// dev
 app.config.globalProperties.$api = 'https://localhost:7000'
-
+// prod
+// app.config.globalProperties.$api = 'https://api.heracle.me'
 
 app.use(router)
 // app.use(BootstrapVue)

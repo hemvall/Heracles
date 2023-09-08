@@ -1,8 +1,32 @@
-.title {
+.formsContainer {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.block {
+    height: 65vh;
+    width: 40%;
+    vertical-align: middle;
+    background-color: transparent;
+    border-radius: 10px;
+    border: solid 3px #9f8548;
+}
+
+.titleContainer {
     display: flex;
     justify-content: center;
-    margin-top: 10%;
-    color: white;
+}
+
+.logo {
+    height: 150px;
+    vertical-align: middle;
+}
+
+.title {
+    color: #9f8548;
 }
 
 .inputs{
@@ -11,12 +35,16 @@
 
 h1 {
     font-size: 26px;
-    color: white;
+    color: #9f8548;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 p {
-    color: white;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a {
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -27,4 +55,39 @@ p {
 
 .link:hover{
     color: aqua;
+}
+
+input {
+    border: solid 2px #373737;
+    border-radius: 5px;
+    background-color: transparent;
+    height: 30px;
+    width: 50%;
+    color: #fff;
+}
+
+.connectButton {
+    margin-top: 5%;
+    padding: 2% 5%;
+    border-radius: 5px;
+    border: solid 2px #373737;
+    background-color: #9f8548;
+    color: #373737;
+    transition: .3s ease-in-out;
+}
+
+.connectButton:hover {
+    background-color: #746133;
+    color: #fff;
+    border-color: #746133;
+}
+
+@media screen and (max-width: 900px) {
+    .formsContainer {
+        display: block;
+    }
+
+    .block {
+        width: 100%;
+    }
 }
