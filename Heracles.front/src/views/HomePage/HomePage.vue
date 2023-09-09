@@ -6,16 +6,17 @@
         <button @click="addCategoryOpen = !addCategoryOpen">Fermer</button>
     </div>
     <div v-for="t in typesFromUser" :key="t.id">
-        <router-link :to="`/exercises/${t.id}`">
-            <div class="typeBlock">
-                <h1>{{ t.label }}</h1>
-            </div>
-        </router-link>
-        <button @click="editCategoryOpen =! editCategoryOpen">Modifier</button>
+        <h1 class="typeLabel">{{ t.label }}</h1>
+        <button @click="editCategoryOpen = !editCategoryOpen">Modifier</button>
         <div v-if="editCategoryOpen">
             <input v-model="editLabel" type="text" />
             <button @click="editCategory(t.id)">Valider</button>
             <button @click="editCategoryOpen = !editCategoryOpen">Fermer</button>
+        </div>
+        <div class="exercisesContainer">
+            <RouterLink to="/" v-for="e in exercisesFromType(t.id)" :key="e.id">
+                <p>{{ e.label }}</p>
+            </RouterLink>
         </div>
     </div>
 </template>
@@ -27,11 +28,14 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     created() {
         this.fetchData();
+        this.userId = localStorage.getItem('userId')
+        console.log(this.userId)
     },
     data() {
         return {
             exercises: [],
             types: [],
+            userId: 99,
             label: '',
             editLabel: '',
             addCategoryOpen: false,
@@ -64,7 +68,8 @@ export default defineComponent({
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    label: this.label
+                    label: this.label,
+                    userId: this.userId
                 })
             };
             fetch(`${this.$api}/exerciseType`, requestOptions)
@@ -93,12 +98,15 @@ export default defineComponent({
                 })
                 .then(response => response.json())
             // .then(data => (this.postId = data.id));
+        },
+        exercisesFromType(tId) {
+            return this.exercises.filter(e => e.typeId == tId && e.userId == localStorage.getItem('userId'))
         }
     },
     computed: {
         typesFromUser() {
             return this.types.filter(e => e.userId == localStorage.getItem('userId'))
-        }
+        },
     }
 }
 );
@@ -109,5 +117,9 @@ export default defineComponent({
 
 template {
     margin: 0 10%;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
 }
 </style>

@@ -16,7 +16,7 @@
                     <p>Password</p>
                     <input v-model="password" type="password" /><br />
                     <button @click="Authentification" class="connectButton">Se connecter</button><br /><br />
-                    <a class="link" @click="openSignUp = !openSignUp">Je n'ai pas encore de compte.</a>
+                    <a class="link" @click="openSignUp = !openSignUp">J'ai oublié mon mot de passe.</a>
                 </div>
             </div>
         </div>

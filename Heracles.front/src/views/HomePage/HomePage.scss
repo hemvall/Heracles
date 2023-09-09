@@ -1,3 +1,7 @@
+.typeLabel {
+    color: white;
+}
+
 .button {
     display: inline-block;
     padding: 0.3em 1.2em;
@@ -41,23 +45,6 @@ img {
     height: 25em;
     border-radius: 15px;
     border: solid 2px #9f8548;
-}
-
-.typeBlock {
-    border: solid 2px white;
-    border-radius: 150px;
-    width: fit-content;
-    padding: 1% 2%;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: transparent;
-    transition: .3s ease-in-out;
-    cursor: pointer;
-}
-
-.typeBlock:hover {
-    border-color: #9f8548;
-    background-color: #9f8548;
 }
 
 a {

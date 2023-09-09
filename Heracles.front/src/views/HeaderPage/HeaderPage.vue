@@ -5,7 +5,8 @@
 
         <div class="header-right">
             <a class="active" href="#home">Home</a>
-            <a href="#contact"></a>
+            <a href="#contact">Contact</a>
+            <a href="#contact">zzz</a>
             <!-- <a @click="location.reload();">Se déconnecter</a> -->
         </div>
     </div>
@@ -14,4 +15,8 @@
 
 <style scoped lang="scss">
 @import url('./HeaderPage.scss');
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
 </style>
