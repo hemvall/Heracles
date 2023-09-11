@@ -1,6 +1,8 @@
-* {box-sizing: border-box;}
+* {
+  box-sizing: border-box;
+}
 
-body { 
+body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -8,7 +10,15 @@ body {
 .header {
   overflow: hidden;
   padding: 20px 10px;
-  padding-left: 7%; padding-right: 7%;
+  position: fixed;
+  padding-left: 7%;
+  padding-right: 7%;
+  background-color: #111;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-bottom: solid 2px #9f8548;
 }
 
 .header a {
@@ -17,7 +27,7 @@ body {
   text-align: center;
   padding: 12px;
   text-decoration: none;
-  font-size: 18px; 
+  font-size: 18px;
   line-height: 25px;
   border-radius: 4px;
 }
@@ -42,8 +52,46 @@ body {
     display: block;
     text-align: left;
   }
-  
+
   .header-right {
     float: none;
   }
+}
+
+.sidenav a {
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: flex;
+  align-items: center;
+  padding: 25px 20px;
+  cursor: pointer;
+  transition: .3s ease-in-out;
+}
+
+.sidenav a img {
+  width: 30px;
+  margin-right: 8%;
+}
+
+.sidenav a:hover {
+  background-color: #131313;
+  color: white;
+}
+
+.sidenav {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  z-index: 1;
+  top: 14%;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  border-right: solid 2px #9f8548;
+}
+
+hr {
+  background-color: #9f8548 !important;
 }

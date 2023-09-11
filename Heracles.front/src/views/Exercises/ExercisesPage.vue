@@ -1,45 +1,56 @@
 <template>
-    <a class="button" @click="formExerciseOpen = !formExerciseOpen">Add an exercise</a>
-    <div v-if="formExerciseOpen">
-        <p>Nom de l'exercice</p>
-        <input v-model="label" type="text" />
-        <p>PR sur l'exercice</p>
-        <input v-model="pr" type="number" />
-        <p>Display position</p>
-        <input v-model="displayPosition" type="number" />
-        <p>Type de label</p>
-        <select v-model="typeId">
-            <option v-for="t in types" :key="t.id" :value="t.id">{{ t.label }}</option>
-        </select>
-        <p>Unité de mesure</p>
-        <input v-model="unit" type="text" />
-
-        <button @click="createExercise">Valider</button>
-        <button @click="formExerciseOpen = !formExerciseOpen">Fermer</button>
-    </div>
-    <div v-for="e in exerciseFromType" :key="e.id">
-        <router-link :to="`/exercise/detail/${e.id}`" class="typeBlock">
-            <h1>{{ e.label }}</h1>
-        </router-link>
-        <button @click="editExerciseOpen = !editExerciseOpen">Edit</button>
-        <div v-if="editExerciseOpen">
-            <p>Nom de l'exercice</p>
-            <input v-model="label" type="text" />
-            <p>PR sur l'exercice</p>
-            <input v-model="pr" type="number" />
-            <p>Display position</p>
-            <input v-model="displayPosition" type="number" />
-            <p>Type de label</p>
-            <select v-model="typeId">
-                <option v-for="t in types" :key="t.id" :value="t.id">{{ t.label }}</option>
-            </select>
-            <p>Unité de mesure</p>
-            <select v-model="unit" type="text">
-                <option v-for="u in units" :key="u.id" :value="u.code"> {{ u.code }}</option>
-            </select>
-            <button @click="editExercise(e.id)">Valider</button>
-            <button @click="editExerciseOpen = !editExerciseOpen">Fermer</button>
+    <div class="wholePage">
+        <div class="container" v-if="addCategoryOpen">
+            <div class="form">
+                <h2 style="color: white;">Add a category</h2>
+                <form>
+                    <p style="color: white; margin-top: 5%;">Date</p>
+                    <input v-model="label" type="text" />
+                    <button @click="createCategory" class="formConfirm">Valider</button>
+                    <button @click="addCategoryOpen = !addCategoryOpen" class="formReturn">Fermer</button>
+                </form>
+            </div>
         </div>
+        <div class="container" v-if="addExerciseOpen">
+            <div class="form">
+                <h2 style="color: white;">Add an exercise</h2>
+                <form>
+                    <p style="color: white; margin-top: 5%;">Date</p>
+                    <input v-model="label" type="text" />
+                    <button @click="createExercise()" class="formConfirm">Valider</button>
+                    <button @click="addExerciseOpen = !addExerciseOpen" class="formReturn">Fermer</button>
+                </form>
+            </div>
+        </div>
+        <div class="wholePage">
+            <h1 style="color:white; font-size: 42px;">My exercises</h1>
+            <a class="button" @click="addCategoryOpen = !addCategoryOpen">Add a category</a>
+            <a class="button" @click="addExerciseOpen = !addExerciseOpen">Add an exercise</a>
+            <div v-if="addCategoryOpen">
+
+            </div>
+            <div v-if="typesFromUser.length > 0">
+                <div v-for="t in typesFromUser" :key="t.id">
+                    <h1 class="typeLabel">{{ t.label }}</h1>
+                    <div class="exercisesContainer">
+                        <RouterLink :to="`/exercise/detail/${e.id}`" v-for="e in exercisesFromType(t.id)" :key="e.id"
+                            class="exerciseBlock">
+                            <h2 style="white-space: nowrap; display: flex; justify-content: center; font-size: 20px;">{{
+                                e.label
+                            }}</h2>
+                        </RouterLink>
+                        <!-- <a class="exerciseBlock">
+                        <h2 style="white-space: nowrap; display: flex; justify-content: center; font-size: 20px;"
+                            @click="addExerciseOpen = !addExerciseOpen">Ajouter un
+                            exercice</h2>
+                    </a> -->
+                    </div>
+
+                </div>
+            </div>
+            <h1 v-else style="color:white;"> Aucune catégorie d'exercice n'a chargé.</h1>
+        </div>
+        <br /><br />
     </div>
 </template>
 
@@ -50,19 +61,19 @@ import { defineComponent } from 'vue';
 export default defineComponent({
     created() {
         this.fetchData();
+        this.userId = localStorage.getItem('userId')
+        console.log(this.userId)
     },
     data() {
         return {
             exercises: [],
             types: [],
-            formExerciseOpen: false,
-            editExerciseOpen: false,
+            userId: 99,
             label: '',
-            pr: 1,
-            userId: 1,
-            displayPosition: 1,
-            typeId: 1,
-            unit: '',
+            editLabel: '',
+            addCategoryOpen: false,
+            addExerciseOpen: false,
+            editCategoryOpen: false,
         };
     },
     methods: {
@@ -85,64 +96,51 @@ export default defineComponent({
                     this.loading = false;
                     return;
                 });
-            fetch(`${this.$api}/units`)
-                .then(r => r.json())
-                .then(json => {
-                    this.units = json;
-                    this.loading = false;
-                    return;
-                });
         },
-        createExercise() {
+        createCategory() {
             const requestOptions = {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     label: this.label,
-                    pr: this.pr,
-                    displayPosition: this.displayPosition,
-                    user: this.userId,
-                    label: this.label,
-                    typeId: this.typeId
+                    userId: this.userId
                 })
             };
-            fetch(`${this.$api}/exercises`, requestOptions)
+            fetch(`${this.$api}/exerciseType`, requestOptions)
                 .then(response => {
-                    if (response.ok) { alert("L'exercice a bien été crée") }
-                    else { alert("L'exercice n'a pas été crée") }
+                    if (response.ok) { alert("La catégorie a bien été créee") }
+                    else { alert("La catégorie n'a pas été créee") }
                     this.fetchData()
                 })
                 .then(response => response.json())
             // .then(data => (this.postId = data.id));
         },
-        editExercise(eId) {
+        editCategory(tId) {
             const requestOptions = {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    id: eId,
-                    label: this.label,
-                    pr: this.pr,
-                    displayPosition: this.displayPosition,
-                    user: this.userId,
-                    label: this.label,
-                    typeId: this.typeId
+                    id: tId,
+                    label: this.editLabel
                 })
             };
-            fetch(`${this.$api}/exercises/${eId}`, requestOptions)
+            fetch(`${this.$api}/exerciseType/${tId}`, requestOptions)
                 .then(response => {
-                    if (response.ok) { alert("L'exercice a bien été modifié") }
-                    else { alert("L'exercice n'a pas été modifié") }
+                    if (response.ok) { alert("La catégorie a bien été modifiée") }
+                    else { alert("La catégorie n'a pas été modifiée") }
                     this.fetchData()
                 })
                 .then(response => response.json())
             // .then(data => (this.postId = data.id));
+        },
+        exercisesFromType(tId) {
+            return this.exercises.filter(e => e.typeId == tId && e.userId == localStorage.getItem('userId'))
         }
     },
     computed: {
-        exerciseFromType() {
-            return this.exercises.filter(e => e.typeId == this.$route.params.typeId && e.userId == localStorage.getItem('userId'))
-        }
+        typesFromUser() {
+            return this.types.filter(e => e.userId == localStorage.getItem('userId'))
+        },
     }
 }
 );
@@ -154,4 +152,12 @@ export default defineComponent({
 template {
     margin: 0 10%;
 }
-</style>
+
+.wholePage {
+    margin-left: 11%;
+    margin-top: 8%;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}</style>

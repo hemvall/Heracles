@@ -12,5 +12,6 @@ namespace Heracles.Models
         public int? PR { get; set; }
         public int? DisplayPosition { get; set; }
         public string? Label { get; set; }
+        public string? Unit { get; set; }
     }
 }

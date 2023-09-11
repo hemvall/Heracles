@@ -1,0 +1,34 @@
+{
+    "return": "Return",
+    "header": {
+      "title": "Heracle",
+      "button1": "Home",
+      "button2": "aaa",
+      "button3": "bbb"
+    },
+    "notAuthentified": {
+      "ConnectionFormTitle": "Sign in",
+      "SignupFormTitle": "Sign up",
+      "Mail": "Mail",
+      "Password": "Password",
+      "Name": "Name",
+      "LastName": "Last name",
+      "ConnectionButton": "Sign in",
+      "SignupButton": "Sign up",
+      "ForgotPassword": "Forgot your password ?"
+    },
+    "exercisesPage": {
+      "MainTitle": "My exercises",
+      "AddCateg": "Add a category",
+      "AddExercise": "Add an exercise"
+    },
+    "exerciseDetail": {
+      "AddPerf": "Add a performance",
+      "Date": "Date",
+      "Perf": "Performance",
+      "Répétitions": "Reps",
+      "Sets": "Sets",
+      "Score": "Score"
+    }
+  }
+  

@@ -13,6 +13,7 @@ namespace Heracles.Models
         public int Weight { get; set; }
         public int Reps { get; set; }
         public int Sets { get; set; }
+        public int Score { get; set; }
 /*        public int Volume { get; set; }
 */    }
 }

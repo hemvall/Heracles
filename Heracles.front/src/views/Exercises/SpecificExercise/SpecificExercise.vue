@@ -1,38 +1,47 @@
 <template>
-    <a class="button" @click="formPerformanceOpen = !formPerformanceOpen">Add a performance</a>
-    <div v-if="formPerformanceOpen">
-        <p>Date</p>
-        <input v-model="perfDate" type="date" />
-        <p>Weight</p>
-        <input v-model="Weight" type="number" />
-        <p>Reps</p>
-        <input v-model="Reps" type="number" />
-        <p>Sets</p>
-        <input v-model="Sets" type="number" />
-        <p>Score</p>
-        <input v-model="Score" type="number" />
-        <button @click="createPerformance">Valider</button>
-        <button @click="formPerformanceOpen = !formPerformanceOpen">Fermer</button>
-    </div>
-    <div class="typeBlock">
-        <h1>{{ exercise.label }}</h1>
-        <div v-for="performance in perfFromExercise(this.$route.params.exerciseId)" :key="performance.id">
-            <p>{{ performance.weight }}</p><br />
-            <button @click="editPerfOpen = !editPerfOpen" style="color: black;  ">Edit</button>
-            <div v-if="editPerfOpen">
+    <div class="container" v-if="formPerformanceOpen">
+        <div class="form">
+            <h2>Add a performance</h2>
+            <form>
                 <p>Date</p>
                 <input v-model="perfDate" type="date" />
-                <p>Weight</p>
-                <input v-model="Weight" type="number" />
+                <p>Performance</p>
+                <input v-model="Weight" type="number" /> <a>{{ exercise.unit }}</a>
                 <p>Reps</p>
                 <input v-model="Reps" type="number" />
                 <p>Sets</p>
-                <input v-model="Sets" type="number" />
-                <p>Score</p>
-                <input v-model="Score" type="number" />
-                <button @click="editPerformance(performance.id)">Valider</button>
-                <button @click="formExerciseOpen = !formExerciseOpen">Fermer</button>
-            </div>
+                <input v-model="Sets" type="number" /><br><br>
+                <button @click="createPerformance" class="formConfirm">Add</button>
+                <button @click="formPerformanceOpen = !formPerformanceOpen" class="formReturn">Close</button>
+            </form>
+        </div>
+    </div>
+    <div class="wholePage">
+        <a class="returnButton" @click="$router.go(-1)">Return</a>
+        <div class="typeBlock">
+            <h1>{{ exercise.label }}</h1>
+            <a class="button" style="margin-left: 0%;" @click="formPerformanceOpen = !formPerformanceOpen">Add a
+                performance</a>
+            <table>
+                <thead>
+                    <th>Date</th>
+                    <th>Performance</th>
+                    <th>Reps</th>
+                    <th>Sets</th>
+                    <th>Total Score</th>
+                </thead>
+                <tbody v-if="perfFromExercise(this.$route.params.exerciseId).length > 0">
+                    <tr v-for="performance in perfFromExercise(this.$route.params.exerciseId)" :key="performance.id">
+                        <td>{{ performance.date }}</td>
+                        <td>{{ performance.weight }} {{ exercise.unit }}</td>
+                        <td>{{ performance.reps }}</td>
+                        <td>{{ performance.sets }}</td>
+                        <td>{{ performance.score }}</td>
+                    </tr>
+                </tbody>
+                <a v-else><br />Aucune performance n'a chargée.</a>
+            </table>
+
         </div>
     </div>
 </template>
@@ -40,6 +49,7 @@
 
 <script lang="js">
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     created() {
@@ -80,6 +90,10 @@ export default defineComponent({
                     return;
                 });
         },
+        goBack() {
+            const router = useRouter();
+            router.go(-1);
+        },
         createPerformance() {
             const requestOptions = {
                 method: "POST",
@@ -96,8 +110,8 @@ export default defineComponent({
             };
             fetch(`${this.$api}/performances`, requestOptions)
                 .then(response => {
-                    if (response.ok) { alert("La performance a bien été ajoutée") }
-                    else { alert("La performance a été ajoutée") }
+                    if (response.ok) { alert("La performance a bien été ajoutée"); this.formPerformanceOpen = false }
+                    else { alert("Erreur. La performance n'a pas été ajoutée") }
                     this.fetchData()
                 })
                 .then(response => response.json())
@@ -149,5 +163,31 @@ template {
 input,
 button {
     color: black;
+}
+
+
+.container {
+   display: flex;
+   justify-content: center;
+}
+
+.form {
+    position: fixed;
+    z-index: 10;
+    background-color: #141010;
+    height: 70%;
+    width: 70%;
+    padding: 1% 8%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px #0000001a;
+}
+.form input[type="text"],
+.form input[type="password"],
+.form button {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
 }
 </style>
