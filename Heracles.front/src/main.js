@@ -1,13 +1,12 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import i18n from './plugins/i18n'
 
-const app = createApp(App)
+const app = createApp(App);
 // dev
-app.config.globalProperties.$api = 'https://localhost:7000'
+app.config.globalProperties.$api = "https://localhost:7000";
 // prod
 // app.config.globalProperties.$api = 'https://api.heracle.me'
 
-app.use(router)
-
-app.mount('#app')
+app.use(router).use(i18n).mount("#app");

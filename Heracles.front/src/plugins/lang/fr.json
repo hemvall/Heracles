@@ -4,7 +4,13 @@
     "title": "Heracle",
     "button1": "Accueil",
     "button2": "aaa",
-    "button3": "bbb"
+    "button3": "bbb",
+    "home": "Accueil",
+    "exercises": "Exercices",
+    "goals": "Objectifs",
+    "profile": "Mon profile",
+    "settings": "Paramètres",
+    "logout": "Deconnexion"
   },
   "notAuthentified": {
     "ConnectionFormTitle": "Connexion",

@@ -1,20 +1,32 @@
 <template>
         <div class="wholePage">
-            <div class="sectionContainer">
+            <!-- <div class="welcomeContainer">
                 <div class="child left">
-                    <a>Bienvenue <br> {{ user.name }}!</a>
+                    <a class="welcomeTitle">Bienvenue, <br> {{ user.name }}!</a><br>
+                    <p><strong style="text-decoration: underline;">Enregistre</strong> tes performances et <strong style="text-decoration: underline;">obtiens un suivi</strong> sur tes performances sportives !</p>
+                    <img style="position: absolute; height: 200px; z-index: 0;" src="../../assets/sport.svg" />
                 </div>
                 <div class="child right">
-                    <img style="height: 100px;" src="../../assets/crown.svg" />
                     <a>Vous ne disposez pas encore du premium <br> {{ user.name }}!</a>
+                    <button class="premiumButton">
+                        <img style="height: 30px;" src="../../assets/crown.svg" /> Je passe à premium
+                    </button>
+                </div>
+            </div> -->
+            <div class="welcomeContainer">
+                <div class="">
+                    <h1 class="welcomeTitle">Tu souhaites :</h1>
+                </div>
+                <div class="">
+                    
                 </div>
             </div>
             <div class="sectionContainer">
-                <div class="child left">
-                    <a>Bienvenue <br> {{ user.name }}!</a>
+                <div class="">
+                    <a>Objectifs blabla</a>
                 </div>
-                <div class="child right">
-                    <a>Vous ne disposez pas encore du premium <br> {{ user.name }}!</a>
+                <div class="">
+                    
                 </div>
             </div>
         </div>

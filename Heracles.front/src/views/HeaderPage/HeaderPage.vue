@@ -2,21 +2,21 @@
     <div class="headerContainer">
         <div class="header">
             <img src="../../assets/logo.png" width="45px">
-            <a href="/" class="logo">Heracles</a>
+            <a href="/" class="logo">{{ $t('header.title') }}</a>
 
-            <div class="header-right">
-                <a class="active" href="#home">Home</a>
-                <a href="#contact">Contact</a>
-                <a>zzz</a>
+            <div style="position: absolute;right: 5%;top: 10%;" class="header-right">
+                <!-- <a class="active" href="#home">{{ $t('header.button1') }}</a> -->
+                <a @click="$i18n.locale = 'fr'"><img style="height: 45px;" src="../../assets/fr.svg" alt="" /></a>
+                <a @click="$i18n.locale = 'en'"><img style="height: 45px;" src="../../assets/uk.svg" alt="" /></a>
                 <!-- <a @click="location.reload();">Se déconnecter</a> -->
             </div>
         </div>
         <div class="sidenav">
-            <a class="item" href="/"><img src="../../assets/Icon/home.svg"> Home</a>
-            <a class="item" href="/exercises"><img src="../../assets/Icon/dumbell.svg"> Exercises</a>
-            <a class="item"><img src="../../assets/Icon/goal.svg"> Goals</a>
-            <a class="item"><img src="../../assets/Icon/user.svg"> My profile</a>
-            <a class="item"><img src="../../assets/Icon/logout.svg" @click="clear"> Logout</a>
+            <a class="item" href="/"><img src="../../assets/Icon/home.svg">{{ $t('header.home') }}</a>
+            <a class="item" href="/exercises"><img src="../../assets/Icon/dumbell.svg">{{ $t('header.exercises') }}</a>
+            <a class="item"><img src="../../assets/Icon/goal.svg">{{ $t('header.goals') }}</a>
+            <a class="item"><img src="../../assets/Icon/user.svg">{{ $t('header.profile') }}</a>
+            <a class="item"><img src="../../assets/Icon/logout.svg" @click="clear">{{ $t('header.logout') }}</a>
         </div>
 
     </div>
@@ -24,7 +24,6 @@
 
 <script lang="js">
 import { defineComponent } from 'vue';
-import { useRouter } from 'vue-router';
 
 export default defineComponent({
     created() {
@@ -39,7 +38,7 @@ export default defineComponent({
             this.loading = true;
 
         },
-        clear(){
+        clear() {
             console.log("aa")
             window.localStorage.clear()
         }

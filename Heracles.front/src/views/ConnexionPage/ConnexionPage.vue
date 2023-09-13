@@ -1,22 +1,22 @@
 <template>
     <div class="titleContainer">
         <h1 class="title" style="display: flex; justify-content: center; font-size: 36px; margin-top: 5%; color:#9f8548">
-            Heracles</h1>
+            {{ $t('header.title') }}</h1>
             <img class="logo" src="../../assets/logo.png" />
     </div>
     <div class="formsContainer">
         <div class="block">
             <div class="ml-3">
                 <div class="title" style="margin-top: 7%;">
-                    <h1>Connexion</h1>
+                    <h1>{{ $t('notAuthentified.ConnectionFormTitle') }}</h1>
                 </div>
                 <div class="inputs">
-                    <p>Mail</p>
+                    <p>{{ $t('notAuthentified.Mail') }}</p>
                     <input v-model="mail" type="text" />
-                    <p>Password</p>
+                    <p>{{ $t('notAuthentified.Password') }}</p>
                     <input v-model="password" type="password" /><br />
-                    <button @click="Authentification" class="connectButton">Se connecter</button><br /><br />
-                    <a class="link" @click="openSignUp = !openSignUp">J'ai oublié mon mot de passe.</a>
+                    <button @click="Authentification" class="connectButton">{{ $t('notAuthentified.ConnectionFormTitle') }}</button><br /><br />
+                    <a class="link" @click="openSignUp = !openSignUp">{{ $t('notAuthentified.ForgotPassword') }}</a>
                 </div>
             </div>
         </div>
@@ -25,17 +25,17 @@
 
                 <div class="inputs">
                     <div class="title">
-                        <h1>Inscription</h1>
+                        <h1>{{ $t('notAuthentified.SignupFormTitle') }}</h1>
                     </div>
-                    <p>Mail</p>
+                    <p>{{ $t('notAuthentified.Mail') }}</p>
                     <input v-model="signupMail" type="text" />
-                    <p>Prénom</p>
+                    <p>{{ $t('notAuthentified.Name') }}</p>
                     <input v-model="name" type="text" />
-                    <p>Nom de famille</p>
+                    <p>{{ $t('notAuthentified.LastName') }}</p>
                     <input v-model="lastName" type="text" />
-                    <p>Password</p>
+                    <p>{{ $t('notAuthentified.Password') }}</p>
                     <input v-model="signupPassword" type="password" /><br>
-                    <button @click="SignUp" class="connectButton">Se connecter</button>
+                    <button @click="SignUp" class="connectButton">{{ $t('notAuthentified.ConnectionFormTitle') }}</button>
                 </div>
             </div>
         </div>
