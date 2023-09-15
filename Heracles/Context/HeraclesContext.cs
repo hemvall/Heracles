@@ -10,6 +10,7 @@ namespace heracles_api.Context
         public DbSet<Performance>? Performances { get; set; }
         public DbSet<User>? Users { get; set; }
         public DbSet<Unit>? Units { get; set; }
+        public DbSet<Goal>? Goals { get; set; }
 
         public HeraclesContext(DbContextOptions<HeraclesContext> options) : base(options)
         {

@@ -6,15 +6,15 @@
 
             <div style="position: absolute;right: 5%;top: 10%;" class="header-right">
                 <!-- <a class="active" href="#home">{{ $t('header.button1') }}</a> -->
-                <a @click="$i18n.locale = 'fr'"><img style="height: 45px;" src="../../assets/fr.svg" alt="" /></a>
-                <a @click="$i18n.locale = 'en'"><img style="height: 45px;" src="../../assets/uk.svg" alt="" /></a>
+                <a @click="$i18n.locale = 'fr'"><img style="height: 45px; border-radius: 10px; border: solid 2px;" src="../../assets/fr.svg" alt="" /></a>
+                <a @click="$i18n.locale = 'en'"><img style="height: 45px; border-radius: 10px; border: solid 2px;" src="../../assets/uk.svg" alt="" /></a>
                 <!-- <a @click="location.reload();">Se déconnecter</a> -->
             </div>
         </div>
         <div class="sidenav">
             <a class="item" href="/"><img src="../../assets/Icon/home.svg">{{ $t('header.home') }}</a>
             <a class="item" href="/exercises"><img src="../../assets/Icon/dumbell.svg">{{ $t('header.exercises') }}</a>
-            <a class="item"><img src="../../assets/Icon/goal.svg">{{ $t('header.goals') }}</a>
+            <a class="item" href="/goals"><img src="../../assets/Icon/goal.svg">{{ $t('header.goals') }}</a>
             <a class="item"><img src="../../assets/Icon/user.svg">{{ $t('header.profile') }}</a>
             <a class="item"><img src="../../assets/Icon/logout.svg" @click="clear">{{ $t('header.logout') }}</a>
         </div>

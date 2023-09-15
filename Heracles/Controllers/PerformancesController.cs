@@ -21,6 +21,14 @@ namespace Performances.Controllers
         {
             var perf = _heraclesContext.Performances?.AsNoTracking().FirstOrDefault(x => x.Id == id);
             return perf is null ? NotFound() : perf;
+        } 
+        
+
+        [HttpGet("/user/{userId:int}/Performances", Name = "GetUserPerformances")]
+        public ActionResult<IEnumerable<Performance>> GetUserPerformances(int userId)
+        {
+            var perf = _heraclesContext.Performances?.Where(x => x.UserId == userId).AsNoTracking().ToList();
+            return perf is null ? NotFound() : perf;
         }
 
         [HttpGet]
