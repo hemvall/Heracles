@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashBoard from '../views/DashBoard/DashBoard.vue'
 import Exercises from '../views/Exercises/ExercisesPage.vue'
 import Goals from '../views/Goals/GoalsPage.vue'
+import CreateGoal from '../views/Goals/CreateGoal/CreateGoal.vue'
 import SpecificExercise from '../views/Exercises/SpecificExercise/SpecificExercise.vue'
 
 const router = createRouter({
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/exercise/detail/:exerciseId',
       name: 'specificId',
       component: SpecificExercise
+    },
+    {
+      path: '/goal/create',
+      name: 'CreateGoal',
+      component: CreateGoal
     },
   ]
 })

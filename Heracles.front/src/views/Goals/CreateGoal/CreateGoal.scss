@@ -1,0 +1,106 @@
+.subHeader {
+    background-color: transparent;
+    height: 5%;
+    padding: 0 3%;
+    width: 100%;
+}
+
+.subHeadStates {
+    display: flex;
+    left: 0;
+    color: white;
+}
+
+.subHeadStates a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #818181;
+    display: flex;
+    font-weight: 600;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.subHeadStates a:hover {
+    color: #b1b1b1;
+}
+
+.formContainer {
+    color: white;
+    margin-left: 5%;
+}
+
+.formSection {
+    display: flex;
+    margin-bottom: 1%;
+}
+
+input {
+    border: solid 2px #373737;
+    border-radius: 5px;
+    background-color: transparent;
+    height: 30px;
+    width: 50%;
+    padding: 0 1%;
+    color: #fff !important;
+    margin-top: 1.5%; 
+    margin-left: 1.5%; 
+    margin-right: 3%; 
+}
+
+h2 {
+    white-space: nowrap;
+}
+
+select {
+    background-color: transparent;
+    border: solid 3px #373737;
+    color: white;
+    margin-left: 2%; 
+}
+
+option {
+    background-color: #373737;
+    color: white;
+    &:hover{
+        background-color: #9f8548 !important;
+    }
+}
+
+.btnsContainer {
+    margin-top: 4%;
+}
+
+.confirmBtn {
+    text-decoration: none;
+    margin-left: 2%;
+    border-radius: 5px;
+    padding: 1% 2%;
+    border-color: #9f8548;
+    cursor: pointer;
+    color: white !important;
+
+    &:hover {
+        color: #d0d0d0 !important;
+    }
+}
+
+.confirmBtn {
+    background-color: #9f8548;
+    white-space: nowrap;
+}
+
+.cancelBtn {
+    border-radius: 5px;
+    padding: 1% 2%;
+    border-color: #9f8548;
+    border: solid 2px;
+    cursor: pointer;
+    color: white !important;
+    transition: .2s ease-in-out;
+    &:hover {
+        background-color: #818181;
+        border-color: #818181;
+    }
+}

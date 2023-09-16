@@ -20,7 +20,7 @@
             <div v-for="g in goalsActive" :key="g.id">
                 <div class="goalLine">
                     <div class="layer">
-                        <a class="goalTitle">{{ g.label }} {{ g.isActive }}</a>
+                        <a class="goalTitle">{{ g.label }}</a>
                         <a class="goalProgress"></a>
                         <a @click="closeGoal(g.id, g.userId, g.exerciseId, g.label, g.data, g.startingDate, g.deadline, g.isActive)"
                             class="closeGoal">Close goal</a>
@@ -31,10 +31,10 @@
                         </div>
                     </div>
                 </div>
-                <div :href="`/goal/${g.id}/edit`" class="goalLine addGoal">
-                    <div class="layer">
-                        <a style="font-weight: 600;" class=""> + Add a new goal</a>
-                    </div>
+            </div>
+            <div @click="$router.push(`/goal/create`)" class="goalLine addGoal">
+                <div class="layer">
+                    <a style="font-weight: 600;" class=""> + Add a new goal</a>
                 </div>
             </div>
         </div>
