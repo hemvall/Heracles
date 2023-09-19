@@ -10,9 +10,9 @@ namespace Heracles.Models
         public int? UserId { get; set; }
         public int? ExerciseId { get; set; }
         public string? Label { get; set; }
+        public int? StartingData { get; set; }
         public int? Data { get; set; }
         public DateTime StartingDate { get; set; }
         public DateTime Deadline { get; set; }
-        public bool IsActive { get; set; }
-    }
+        public bool IsActive { get; set; }    }
 }

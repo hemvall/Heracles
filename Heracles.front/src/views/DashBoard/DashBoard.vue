@@ -1,6 +1,6 @@
 <template>
-        <div class="wholePage">
-            <!-- <div class="welcomeContainer">
+    <div class="wholePage">
+        <!-- <div class="welcomeContainer">
                 <div class="child left">
                     <a class="welcomeTitle">Bienvenue, <br> {{ user.name }}!</a><br>
                     <p><strong style="text-decoration: underline;">Enregistre</strong> tes performances et <strong style="text-decoration: underline;">obtiens un suivi</strong> sur tes performances sportives !</p>
@@ -13,25 +13,41 @@
                     </button>
                 </div>
             </div> -->
-            <div class="welcomeContainer">
-                <div class="">
-                    <h1 class="welcomeTitle">Tu souhaites :</h1>
-                </div>
-                <div class="">
-                    
-                </div>
-            </div>
-            <div class="sectionContainer">
-                <div class="">
-                    <a>Objectifs blabla</a>
-                </div>
-                <div class="">
-                    
-                </div>
+        <div class="welcomeContainer">
+            <h1 class="welcomeTitle">Stats</h1>
+            <div class="statsContainer">
+                <a class="statBlock">
+                    <h2>Workouts this week </h2>
+                    <h1 class="statRank" style="color:#9F8548">2<br></h1>
+                    <h2 class="statLink">> Record a performance</h2>
+
+                </a>
+
+                <a class="statBlock">
+                    <h2>Global Rank</h2>
+                    <h1 class="statRank" style="color:#9F8548">1732</h1>
+                    <h2 class="statLink">> Leaderboard</h2>
+
+                </a>
+                <a class="statBlock">
+                    <h2>User Score</h2>
+                    <h1 class="statRank" style="color:#9F8548">5000<br></h1>
+                </a>
             </div>
         </div>
-        <br /><br />
-
+        <div class="sectionContainer">
+            <h1>Goals</h1>
+            <div class="goalSection" v-for="g in top3" :key="g.id">
+                <h2 class="goalTitle" @click="$router.push(`/goal/${g.id}/detail`)">{{ g.label }}<a> (x days left)</a><br>
+                </h2>
+                <a>{{ g.startingData }}kg &#10132; {{ g.data }}kg (Current PR:
+                    <a v-for="e in exerciseFromGoal(g.id)" :key="e.id">{{ e.pr }}</a>)
+                </a><br>
+                <progress value="60" max="100" style="height: 25px;"></progress><a> 60%</a>
+            </div>
+        </div>
+    </div>
+    <br /><br />
 </template>
 
 
@@ -47,12 +63,16 @@ export default defineComponent({
     data() {
         return {
             user: {},
+            top3: {},
+            exercises: [],
             idUser: 0
         };
     },
     methods: {
         fetchData() {
+            this.exercises = [];
             this.user = {};
+            this.top3 = {};
             this.loading = true;
 
             fetch(`${this.$api}/users/${localStorage.getItem("userId")}`)
@@ -62,9 +82,24 @@ export default defineComponent({
                     this.loading = false;
                     return;
                 });
+
+            fetch(`${this.$api}/user/${localStorage.getItem("userId")}/goals/top3`)
+                .then(r => r.json())
+                .then(json => {
+                    this.top3 = json;
+                    this.loading = false;
+                    return;
+                });
+            fetch(`${this.$api}/exercises`)
+                .then(r => r.json())
+                .then(json => {
+                    this.exercises = json;
+                    this.loading = false;
+                    return;
+                });
         },
-        exercisesFromType(tId) {
-            return this.exercises.filter(e => e.typeId == tId && e.userId == localStorage.getItem('userId'))
+        exerciseFromGoal(eId) {
+            return this.exercises.filter(e => e.id == eId && e.userId == localStorage.getItem('userId'))
         }
     },
     computed: {
@@ -91,4 +126,5 @@ template {
 
 * {
     font-family: Arial, Helvetica, sans-serif;
-}</style>
+}
+</style>

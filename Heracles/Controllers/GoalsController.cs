@@ -30,6 +30,14 @@ namespace Goals.Controllers
             var exs = _heraclesContext.Goals?.Where(x => x.UserId == userId).AsNoTracking().ToList();
             return exs is null ? NotFound() : exs;
         }
+        
+
+        [HttpGet("/user/{userId:int}/goals/top3", Name = "Get3Goals")]
+        public ActionResult<IEnumerable<Goal>> Get3Goals(int userId)
+        {
+            var exs = _heraclesContext.Goals?.Where(x => x.UserId == userId).OrderBy(x=> x.Deadline).Take(3).AsNoTracking().ToList();
+            return exs is null ? NotFound() : exs;
+        }
 
         [HttpGet]
         public ActionResult<IEnumerable<Goal>> Get()

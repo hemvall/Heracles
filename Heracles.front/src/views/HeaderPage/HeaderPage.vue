@@ -16,6 +16,7 @@
             <a class="item" href="/exercises"><img src="../../assets/Icon/dumbell.svg">{{ $t('header.exercises') }}</a>
             <a class="item" href="/goals"><img src="../../assets/Icon/goal.svg">{{ $t('header.goals') }}</a>
             <a class="item"><img src="../../assets/Icon/user.svg">{{ $t('header.profile') }}</a>
+            <a class="item"><img src="../../assets/Icon/settings.svg">{{ $t('header.settings') }}</a>
             <a class="item"><img src="../../assets/Icon/logout.svg" @click="clear">{{ $t('header.logout') }}</a>
         </div>
 

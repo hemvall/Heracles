@@ -21,7 +21,7 @@
                 <div class="goalLine">
                     <div class="layer">
                         <a class="goalTitle">{{ g.label }}</a>
-                        <a class="goalProgress"></a>
+                        <progress value="60" max="100" class="goalProgress"></progress>
                         <a @click="closeGoal(g.id, g.userId, g.exerciseId, g.label, g.data, g.startingDate, g.deadline, g.isActive)"
                             class="closeGoal">Close goal</a>
                     </div>
@@ -43,7 +43,7 @@
                 <div class="goalLine">
                     <div class="layer">
                         <a class="goalTitle">{{ g.label }}</a>
-                        <a class="goalProgress"></a>
+                        <progress value="60" max="100" class="goalProgress"></progress>
                     </div>
                     <div class="layer">
                         <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} (X Days left)</a>
@@ -60,7 +60,7 @@
                         <a class="goalTitle">{{ g.label }}</a>
                         <a class="label green" v-if="g.isActive">Current</a>
                         <a class="label red" v-else>Closed</a>
-                        <a class="goalProgress"></a>
+                        <progress value="60" max="100" class="goalProgress"></progress>
                         <a v-if="g.isActive" class="closeGoal">Close goal</a>
                     </div>
                     <div class="layer">
