@@ -31,6 +31,19 @@ namespace Users.Controllers
             return exs is null ? NotFound() : exs;
         }
 
+        [HttpGet("/Leaderboard")]
+        public ActionResult<IEnumerable<string>> Leaderboard()
+        {
+            var emails = _heraclesContext.Users
+                ?.OrderByDescending(x => x.TotalScore)
+                .Select(x => x.Username)
+                .AsNoTracking()
+                .ToList();
+
+            return emails is null ? NotFound() : emails;
+        }
+
+
         [HttpPost("Authentification")]
         public ActionResult<User> Authentification(User ex)
         {

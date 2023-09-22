@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashBoard from '../views/DashBoard/DashBoard.vue'
+import LeaderBoard from '../views/LeaderBoard/LeaderBoard.vue'
 import Exercises from '../views/Exercises/ExercisesPage.vue'
 import Goals from '../views/Goals/GoalsPage.vue'
 import CreateGoal from '../views/Goals/CreateGoal/CreateGoal.vue'
@@ -12,6 +13,11 @@ const router = createRouter({
       path: '/',
       name: 'dashboard',
       component: DashBoard
+    },
+    {
+      path: '/leaderboard',
+      name: 'leaderboard',
+      component: LeaderBoard
     },
     {
       path: '/exercises',

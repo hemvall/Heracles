@@ -18,7 +18,7 @@
             <div class="statsContainer">
                 <a class="statBlock">
                     <h2>Workouts this week </h2>
-                    <h1 class="statRank" style="color:#9F8548">2<br></h1>
+                    <h1 class="statRank" style="color:#9F8548">{{ performancesThisWeek.length }}<br></h1>
                     <h2 class="statLink">> Record a performance</h2>
 
                 </a>
@@ -26,7 +26,7 @@
                 <a class="statBlock">
                     <h2>Global Rank</h2>
                     <h1 class="statRank" style="color:#9F8548">1732</h1>
-                    <h2 class="statLink">> Leaderboard</h2>
+                    <h2 class="statLink" @click="$router.push('/leaderboard')">> Leaderboard</h2>
 
                 </a>
                 <a class="statBlock">
@@ -65,12 +65,14 @@ export default defineComponent({
             user: {},
             top3: {},
             exercises: [],
+            performances: [],
             idUser: 0
         };
     },
     methods: {
         fetchData() {
             this.exercises = [];
+            this.performances = [];
             this.user = {};
             this.top3 = {};
             this.loading = true;
@@ -97,6 +99,13 @@ export default defineComponent({
                     this.loading = false;
                     return;
                 });
+            fetch(`${this.$api}/performances`)
+                .then(r => r.json())
+                .then(json => {
+                    this.performances = json;
+                    this.loading = false;
+                    return;
+                });
         },
         exerciseFromGoal(eId) {
             return this.exercises.filter(e => e.id == eId && e.userId == localStorage.getItem('userId'))
@@ -106,6 +115,21 @@ export default defineComponent({
         typesFromUser() {
             return this.types.filter(e => e.userId == localStorage.getItem('userId'))
         },
+        performancesThisWeek() {
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            const filteredPerformances = this.performances.filter(p => p.userId == localStorage.getItem('userId') && new Date(p.date) > sevenDaysAgo);
+            const uniquePerformances = [];
+
+            for (const performance of filteredPerformances) {
+                const exists = uniquePerformances.some(p => new Date(p.date).getTime() === new Date(performance.date).getTime());
+                if (!exists) {
+                    uniquePerformances.push(performance);
+                }
+            }
+
+            return uniquePerformances;
+        }
     }
 }
 );
