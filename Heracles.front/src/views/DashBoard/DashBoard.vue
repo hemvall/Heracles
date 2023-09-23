@@ -25,20 +25,21 @@
 
                 <a class="statBlock">
                     <h2>Global Rank</h2>
-                    <h1 class="statRank" style="color:#9F8548">1732</h1>
+                    <h1 class="statRank" style="color:#9F8548">12</h1>
                     <h2 class="statLink" @click="$router.push('/leaderboard')">> Leaderboard</h2>
 
                 </a>
                 <a class="statBlock">
-                    <h2>User Score</h2>
-                    <h1 class="statRank" style="color:#9F8548">5000<br></h1>
+                    <h2>Your total Score</h2>
+                    <h1 class="statRank" style="color:#9F8548">{{ totalScore }}<br></h1>
                 </a>
             </div>
         </div>
         <div class="sectionContainer">
             <h1>Goals</h1>
             <div class="goalSection" v-for="g in top3" :key="g.id">
-                <h2 class="goalTitle" @click="$router.push(`/goal/${g.id}/detail`)">{{ g.label }}<a> (x days left)</a><br>
+                <h2 class="goalTitle" @click="$router.push(`/goal/${g.id}/detail`)">{{ g.label }}<a
+                        v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a><br>
                 </h2>
                 <a>{{ g.startingData }}kg &#10132; {{ g.data }}kg (Current PR:
                     <a v-for="e in exerciseFromGoal(g.id)" :key="e.id">{{ e.pr }}</a>)
@@ -56,14 +57,15 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     created() {
-        this.fetchData();
         this.idUser = localStorage.getItem('userId')
+        this.fetchData();
         console.log(this.userId)
     },
     data() {
         return {
             user: {},
             top3: {},
+            totalScore: {},
             exercises: [],
             performances: [],
             idUser: 0
@@ -106,10 +108,31 @@ export default defineComponent({
                     this.loading = false;
                     return;
                 });
+            fetch(`${this.$api}/user/${this.idUser}/TotalScore`)
+                .then(r => r.json())
+                .then(json => {
+                    this.totalScore = json;
+                    this.loading = false;
+                    return;
+                });
         },
         exerciseFromGoal(eId) {
             return this.exercises.filter(e => e.id == eId && e.userId == localStorage.getItem('userId'))
-        }
+        },
+        daysLeft(startingDate, deadline) {
+            const startDate = new Date(startingDate);
+            const endDate = new Date(deadline);
+            const currentTime = new Date();
+
+            if (currentTime >= endDate) {
+                return ['Goal Expired'];
+            }
+
+            const timeDifference = endDate - currentTime;
+            const daysLeft = Math.ceil(timeDifference / (24 * 60 * 60 * 1000));
+
+            return [daysLeft + ' days left'];
+        },
     },
     computed: {
         typesFromUser() {

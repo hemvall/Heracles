@@ -35,7 +35,7 @@ namespace Goals.Controllers
         [HttpGet("/user/{userId:int}/goals/top3", Name = "Get3Goals")]
         public ActionResult<IEnumerable<Goal>> Get3Goals(int userId)
         {
-            var exs = _heraclesContext.Goals?.Where(x => x.UserId == userId).OrderBy(x=> x.Deadline).Take(3).AsNoTracking().ToList();
+            var exs = _heraclesContext.Goals?.Where(x => x.UserId == userId).OrderByDescending(x=> x.Deadline).Take(3).AsNoTracking().ToList();
             return exs is null ? NotFound() : exs;
         }
 

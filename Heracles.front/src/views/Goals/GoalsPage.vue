@@ -26,7 +26,8 @@
                             class="closeGoal">Close goal</a>
                     </div>
                     <div class="layer">
-                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} (X Days left)</a>
+                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} <a
+                                v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
                         <div class="goalData"><a class="dataTxt">X records</a> &#183 <a class="dataTxt">X% complete</a>
                         </div>
                     </div>
@@ -46,7 +47,8 @@
                         <progress value="60" max="100" class="goalProgress"></progress>
                     </div>
                     <div class="layer">
-                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} (X Days left)</a>
+                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }}<a
+                                v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
                         <div class="goalData"><a class="dataTxt">X records</a> &#183 <a class="dataTxt">X% complete</a>
                         </div>
                     </div>
@@ -64,7 +66,8 @@
                         <a v-if="g.isActive" class="closeGoal">Close goal</a>
                     </div>
                     <div class="layer">
-                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} (X Days left)</a>
+                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} <a
+                                v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
                         <div class="goalData"><a class="dataTxt">X records</a> &#183 <a class="dataTxt">X% complete</a>
                         </div>
                     </div>
@@ -145,7 +148,21 @@ export default defineComponent({
                     })
                     .then(response => response.json())
             }
-        }
+        },
+        daysLeft(startingDate, deadline) {
+            const startDate = new Date(startingDate);
+            const endDate = new Date(deadline);
+            const currentTime = new Date();
+
+            if (currentTime >= endDate) {
+                return ['Goal Expired'];
+            }
+
+            const timeDifference = endDate - currentTime;
+            const daysLeft = Math.ceil(timeDifference / (24 * 60 * 60 * 1000));
+
+            return [daysLeft + ' days left'];
+        },
     },
     computed: {
         goalsActive() {

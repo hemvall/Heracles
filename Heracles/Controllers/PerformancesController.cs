@@ -31,6 +31,16 @@ namespace Performances.Controllers
             return perf is null ? NotFound() : perf;
         }
 
+        [HttpGet("/user/{userId:int}/TotalScore", Name = "GetUserTotalScore")]
+        public ActionResult<int> GetUserTotalScore(int userId)
+        {
+            var totalScore = _heraclesContext.Performances
+                .Where(x => x.UserId == userId)
+                .Sum(x => x.Score);
+
+            return totalScore;
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<Performance>> Get()
         {
