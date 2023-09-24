@@ -1,36 +1,23 @@
 <template>
     <div class="wholePage">
-        <!-- <div class="welcomeContainer">
-                <div class="child left">
-                    <a class="welcomeTitle">Bienvenue, <br> {{ user.name }}!</a><br>
-                    <p><strong style="text-decoration: underline;">Enregistre</strong> tes performances et <strong style="text-decoration: underline;">obtiens un suivi</strong> sur tes performances sportives !</p>
-                    <img style="position: absolute; height: 200px; z-index: 0;" src="../../assets/sport.svg" />
-                </div>
-                <div class="child right">
-                    <a>Vous ne disposez pas encore du premium <br> {{ user.name }}!</a>
-                    <button class="premiumButton">
-                        <img style="height: 30px;" src="../../assets/crown.svg" /> Je passe à premium
-                    </button>
-                </div>
-            </div> -->
         <div class="welcomeContainer">
-            <h1 class="welcomeTitle">Stats</h1>
+            <h1 class="welcomeTitle">{{ $t('Dashboard.Stats') }}</h1>
             <div class="statsContainer">
                 <a class="statBlock">
-                    <h2>Workouts this week </h2>
+                    <h2>{{ $t('Dashboard.wThisWeek') }}</h2>
                     <h1 class="statRank" style="color:#9F8548">{{ performancesThisWeek.length }}<br></h1>
-                    <h2 class="statLink">> Record a performance</h2>
+                    <h2 class="statLink">> {{ $t('Dashboard.RecordPerformance') }}</h2>
 
                 </a>
 
                 <a class="statBlock">
-                    <h2>Global Rank</h2>
+                    <h2>{{ $t('Dashboard.Rank') }}</h2>
                     <h1 class="statRank" style="color:#9F8548">12</h1>
-                    <h2 class="statLink" @click="$router.push('/leaderboard')">> Leaderboard</h2>
+                    <h2 class="statLink" @click="$router.push('/leaderboard')">> {{ $t('Dashboard.Leaderboard') }}</h2>
 
                 </a>
                 <a class="statBlock">
-                    <h2>Your total Score</h2>
+                    <h2>{{ $t('Dashboard.Score') }}</h2>
                     <h1 class="statRank" style="color:#9F8548">{{ totalScore }}<br></h1>
                 </a>
             </div>
@@ -41,7 +28,7 @@
                 <h2 class="goalTitle" @click="$router.push(`/goal/${g.id}/detail`)">{{ g.label }}<a
                         v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a><br>
                 </h2>
-                <a>{{ g.startingData }}kg &#10132; {{ g.data }}kg (Current PR:
+                <a>{{ g.startingData }}kg &#10132; {{ g.data }}kg ({{ $t('Dashboard.PR') }}:
                     <a v-for="e in exerciseFromGoal(g.id)" :key="e.id">{{ e.pr }}</a>)
                 </a><br>
                 <progress value="60" max="100" style="height: 25px;"></progress><a> 60%</a>

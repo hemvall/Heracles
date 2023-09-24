@@ -1,5 +1,7 @@
 {
     "return": "Return",
+    "confirm": "Confirm",
+    "close": "Close",
     "header": {
       "title": "Heracle",
       "button1": "Home",
@@ -12,6 +14,9 @@
       "profile": "My profile",
       "settings": "Settings",
       "logout": "Logout"
+    },
+    "form":{
+      "Label": "Label"
     },
     "notAuthentified": {
       "ConnectionFormTitle": "Sign in",
@@ -27,18 +32,43 @@
     "exercisesPage": {
       "MainTitle": "My exercises",
       "AddCateg": "Add a category",
-      "AddExercise": "Add an exercise"
+      "AddExercise": "Add an exercise",
+      "ErrorExercise": "No exercise found"
     },
     "exerciseDetail": {
       "AddPerf": "Add a performance",
       "Date": "Date",
       "Perf": "Performance",
-      "Répétitions": "Reps",
+      "Reps": "Reps",
       "Sets": "Sets",
       "Score": "Score"
     },
-    "": {
-
+    "Dashboard": {
+      "Stats": "Stats",
+      "wThisWeek": "Workouts this week",
+      "Rank": "Global Rank",
+      "Score": "Your total score",
+      "RecordPerformance": "Record a performance",
+      "Leaderboard": "Leaderboard",
+      "Goals": "Goals",
+      "PR": "Current PR"
+    },
+    "Exercises": {
+      "Title": "My exercises",
+      "AddExercise": "Add an exercise",
+      "AddCategory": "Add a category",
+      "AddPerf": "Add a performance",
+      "ErrorPerf": "No performance found."
+    },
+    "Goals": {
+      "Open": "Open",
+      "Current": "Current",
+      "Closed": "Closed",
+      "All": "All",
+      "Records": "records",
+      "Complete": "complete",
+      "AddGoal": "Set a new goal",
+      "CloseGoal": "Close goal"
     }
   }
   

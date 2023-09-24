@@ -1,5 +1,7 @@
 {
   "return": "Retour",
+  "confirm": "Confirmer",
+  "close": "Fermer",
   "header": {
     "title": "Heracle",
     "button1": "Accueil",
@@ -12,6 +14,9 @@
     "profile": "Mon profile",
     "settings": "Paramètres",
     "logout": "Deconnexion"
+  },
+  "form":{
+    "Label": "Nom"
   },
   "notAuthentified": {
     "ConnectionFormTitle": "Connexion",
@@ -27,14 +32,39 @@
   "exercisesPage": {
     "MainTitle": "Mes exercices",
     "AddCateg": "Ajouter une catégorie",
-    "AddExercise": "Ajouter un exercice"
+    "AddExercise": "Ajouter un exercice",
+    "ErrorExercise": "Aucune performance n'a chargé"
   },
   "exerciseDetail": {
     "AddPerf": "Ajouter une performance",
     "Date": "Date",
     "Perf": "Performance",
-    "Répétitions": "Nombre de repétitions",
+    "Reps": "Nombre de repétitions",
     "Sets": "Nombre de séries",
-    "Score": "Score total"
+    "Score": "Score"
+  },
+  "Dashboard": {
+    "Stats": "Statistiques",
+    "wThisWeek": "Cette semaine",
+    "Rank": "Rang global",
+    "Score": "Ton score total",
+    "RecordPerformance": "Ajouter une performance",
+    "Leaderboard": "Classement",
+    "Goals": "Tes objectifs",
+    "PR": "PR actuel"
+  },
+  "Exercises": {
+    "Title": "Mes exercices",
+    "ErrorPerf": "Aucune performance chargée."
+  },
+  "Goals": {
+    "Open": "Ouvert",
+    "Current": "Actuel",
+    "Closed": "Fermé",
+    "All": "Tous",
+    "Records": "enregistrements",
+    "Complete": "",
+    "AddGoal": "Créer un nouvel objectif",
+    "CloseGoal": "Clore l'objectif"
   }
 }

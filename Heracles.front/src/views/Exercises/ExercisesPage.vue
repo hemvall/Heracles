@@ -2,30 +2,30 @@
     <div class="wholePage">
         <div class="container" v-if="addCategoryOpen">
             <div class="form">
-                <h2 style="color: white;">Add a category</h2>
+                <h2 style="color: white;">{{ $t('exercisesPage.AddCateg') }}</h2>
                 <form>
-                    <p style="color: white; margin-top: 5%;">Date</p>
+                    <p style="color: white; margin-top: 5%;">{{ $t('form.Label') }}</p>
                     <input v-model="label" type="text" />
-                    <button @click="createCategory" class="formConfirm">Valider</button>
-                    <button @click="addCategoryOpen = !addCategoryOpen" class="formReturn">Fermer</button>
+                    <button @click="createCategory" class="formConfirm">{{ $t('confirm') }}</button>
+                    <button @click="addCategoryOpen = !addCategoryOpen" class="formReturn">{{ $t('close') }}</button>
                 </form>
             </div>
         </div>
         <div class="container" v-if="addExerciseOpen">
             <div class="form">
-                <h2 style="color: white;">Add an exercise</h2>
+                <h2 style="color: white;">{{ $t('exercisesPage.AddExercise') }}</h2>
                 <form>
-                    <p style="color: white; margin-top: 5%;">Date</p>
+                    <p style="color: white; margin-top: 5%;">{{ $t('form.Label') }}</p>
                     <input v-model="label" type="text" />
-                    <button @click="createExercise()" class="formConfirm">Valider</button>
-                    <button @click="addExerciseOpen = !addExerciseOpen" class="formReturn">Fermer</button>
+                    <button @click="createExercise()" class="formConfirm">{{ $t('confirm') }}</button>
+                    <button @click="addExerciseOpen = !addExerciseOpen" class="formReturn">{{ $t('close') }}</button>
                 </form>
             </div>
         </div>
         <div class="wholePage">
-            <h1 style="color:white; font-size: 42px;">My exercises</h1>
-            <a class="button" @click="addCategoryOpen = !addCategoryOpen">Add a category</a>
-            <a class="button" @click="addExerciseOpen = !addExerciseOpen">Add an exercise</a>
+            <h1 style="color:white; font-size: 42px;">{{ $t('exercisesPage.MainTitle') }}</h1>
+            <a class="button" @click="addCategoryOpen = !addCategoryOpen">{{ $t('exercisesPage.AddCateg') }}</a>
+            <a class="button" @click="addExerciseOpen = !addExerciseOpen">{{ $t('exercisesPage.AddExercise') }}</a>
             <div v-if="addCategoryOpen">
 
             </div>

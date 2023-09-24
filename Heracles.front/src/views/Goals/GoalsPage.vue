@@ -3,12 +3,12 @@
         <div class="subHeader">
             <div class="subHeaderCont">
                 <div class="subHeadStates">
-                    <a v-if="tabindex == 1" class="state stateFocus leftBtns">Open ({{ goalsActive.length }}) </a>
-                    <a v-else class="state leftBtns" @click="tabindex = 1">Open ({{ goalsActive.length }}) </a>
-                    <a v-if="tabindex == 2" class="state stateFocus leftBtns">Closed ({{ goalsnActive.length }}) </a>
-                    <a v-else class="state leftBtns" @click="tabindex = 2">Closed ({{ goalsnActive.length }}) </a>
-                    <a v-if="tabindex == 3" class="state stateFocus leftBtns">All ({{ goals.length }}) </a>
-                    <a v-else class="state leftBtns" @click="tabindex = 3">All ({{ goals.length }}) </a>
+                    <a v-if="tabindex == 1" class="state stateFocus leftBtns">{{ $t('Goals.Open') }} ({{ goalsActive.length }}) </a>
+                    <a v-else class="state leftBtns" @click="tabindex = 1">{{ $t('Goals.Open') }} ({{ goalsActive.length }}) </a>
+                    <a v-if="tabindex == 2" class="state stateFocus leftBtns">{{ $t('Goals.Closed') }} ({{ goalsnActive.length }}) </a>
+                    <a v-else class="state leftBtns" @click="tabindex = 2">{{ $t('Goals.Closed') }} ({{ goalsnActive.length }}) </a>
+                    <a v-if="tabindex == 3" class="state stateFocus leftBtns">{{ $t('Goals.All') }} ({{ goals.length }}) </a>
+                    <a v-else class="state leftBtns" @click="tabindex = 3">{{ $t('Goals.All') }} ({{ goals.length }}) </a>
                     <!-- <a class="state btnGoal">Add a goal </a> -->
                 </div>
             </div>
@@ -23,19 +23,19 @@
                         <a class="goalTitle">{{ g.label }}</a>
                         <progress value="60" max="100" class="goalProgress"></progress>
                         <a @click="closeGoal(g.id, g.userId, g.exerciseId, g.label, g.data, g.startingDate, g.deadline, g.isActive)"
-                            class="closeGoal">Close goal</a>
+                            class="closeGoal">{{ $t('Goals.CloseGoal') }}</a>
                     </div>
                     <div class="layer">
                         <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} <a
                                 v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
-                        <div class="goalData"><a class="dataTxt">X records</a> &#183 <a class="dataTxt">X% complete</a>
+                        <div class="goalData"><a class="dataTxt">X {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X% {{ $t('Goals.Complete') }}</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div @click="$router.push(`/goal/create`)" class="goalLine addGoal">
                 <div class="layer">
-                    <a style="font-weight: 600;" class=""> + Add a new goal</a>
+                    <a style="font-weight: 600;" class=""> + {{ $t('Goals.AddGoal') }}</a>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                     <div class="layer">
                         <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }}<a
                                 v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
-                        <div class="goalData"><a class="dataTxt">X records</a> &#183 <a class="dataTxt">X% complete</a>
+                        <div class="goalData"><a class="dataTxt">X {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X% {{ $t('Goals.Complete') }}</a>
                         </div>
                     </div>
                 </div>
@@ -60,15 +60,15 @@
                 <div class="goalLine">
                     <div class="layer">
                         <a class="goalTitle">{{ g.label }}</a>
-                        <a class="label green" v-if="g.isActive">Current</a>
-                        <a class="label red" v-else>Closed</a>
+                        <a class="label green" v-if="g.isActive">{{ $t('Goals.Current') }}</a>
+                        <a class="label red" v-else>{{ $t('Goals.Closed') }}</a>
                         <progress value="60" max="100" class="goalProgress"></progress>
-                        <a v-if="g.isActive" class="closeGoal">Close goal</a>
+                        <a v-if="g.isActive" class="closeGoal">{{ $t('Goals.CloseGoal') }}</a>
                     </div>
                     <div class="layer">
                         <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} <a
                                 v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
-                        <div class="goalData"><a class="dataTxt">X records</a> &#183 <a class="dataTxt">X% complete</a>
+                        <div class="goalData"><a class="dataTxt">X {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X% {{ $t('Goals.Complete') }}</a>
                         </div>
                     </div>
                 </div>

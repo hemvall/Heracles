@@ -1,34 +1,35 @@
 <template>
     <div class="container" v-if="formPerformanceOpen">
         <div class="form">
-            <h2>Add a performance</h2>
+            <h2>{{ $t('Exercises.Addperf') }}</h2>
             <form>
-                <p>Date</p>
+                <p>{{ $t('exercisesDetail.Date') }}</p>
                 <input v-model="perfDate" type="date" />
-                <p>Performance</p>
+                <p>{{ $t('exerciseDetail.Perf') }}</p>
                 <input v-model="Weight" type="number" /> <a>{{ exercise.unit }}</a>
-                <p>Reps</p>
+                <p>{{ $t('exerciseDetail.Reps') }}</p>
                 <input v-model="Reps" type="number" />
-                <p>Sets</p>
+                <p>{{ $t('exerciseDetail.Sets') }}</p>
                 <input v-model="Sets" type="number" /><br><br>
-                <button @click="createPerformance" class="formConfirm">Add</button>
-                <button @click="formPerformanceOpen = !formPerformanceOpen" class="formReturn">Close</button>
+                <button @click="createPerformance" class="formConfirm">{{ $t('exerciseDetail.Addperf') }}</button>
+                <button @click="formPerformanceOpen = !formPerformanceOpen" class="formReturn">{{ $t('close') }}</button>
             </form>
         </div>
     </div>
     <div class="wholePage">
-        <a class="returnButton" @click="$router.go(-1)">Return</a>
         <div class="typeBlock">
             <h1>{{ exercise.label }}</h1>
-            <a class="button" style="margin-left: 0%;" @click="formPerformanceOpen = !formPerformanceOpen">Add a
-                performance</a>
+            <h2>{{ $t('Dashboard.PR') }}: {{ highestWeightPerformance ? highestWeightPerformance.weight + ' ' + exercise.unit : 'N/A' }}
+            </h2>
+            <a class="returnButton" @click="$router.go(-1)">{{ $t('return') }}</a>
+            <a class="button" style="margin-left: 0%;" @click="formPerformanceOpen = !formPerformanceOpen">{{ $t('exerciseDetail.AddPerf') }}</a>
             <table>
                 <thead>
-                    <th>Date</th>
-                    <th>Performance</th>
-                    <th>Reps</th>
-                    <th>Sets</th>
-                    <th>Total Score</th>
+                    <th>{{ $t('exerciseDetail.Date') }}</th>
+                    <th>{{ $t('exerciseDetail.Perf') }}</th>
+                    <th>{{ $t('exerciseDetail.Reps') }}</th>
+                    <th>{{ $t('exerciseDetail.Sets') }}</th>
+                    <th>{{ $t('exerciseDetail.Score') }}</th>
                 </thead>
                 <tbody v-if="perfFromExercise(this.$route.params.exerciseId).length > 0">
                     <tr v-for="performance in perfFromExercise(this.$route.params.exerciseId)" :key="performance.id">
@@ -39,7 +40,7 @@
                         <td>{{ performance.score }}</td>
                     </tr>
                 </tbody>
-                <a v-else><br />Aucune performance n'a chargée.</a>
+                <a v-else><br />{{ $t('Exercises.ErrorPerf') }}</a>
             </table>
 
         </div>
@@ -144,6 +145,24 @@ export default defineComponent({
         perfFromExercise(eId) {
             return this.performances.filter(p => p.exerciseId == eId && p.userId == localStorage.getItem('userId'))
         }
+    },
+    computed: {
+        highestWeightPerformance() {
+            const performances = this.perfFromExercise(this.$route.params.exerciseId);
+            if (performances.length === 0) {
+                return null; // Handle the case when there are no performances.
+            }
+
+            // Find the performance with the highest weight.
+            const highestWeightPerformance = performances.reduce((maxPerformance, performance) => {
+                if (performance.weight > maxPerformance.weight) {
+                    return performance;
+                }
+                return maxPerformance;
+            }, performances[0]);
+
+            return highestWeightPerformance;
+        },
     }
 }
 );
@@ -167,8 +186,8 @@ button {
 
 
 .container {
-   display: flex;
-   justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .form {
@@ -182,6 +201,7 @@ button {
     border-radius: 5px;
     box-shadow: 0 2px 4px #0000001a;
 }
+
 .form input[type="text"],
 .form input[type="password"],
 .form button {

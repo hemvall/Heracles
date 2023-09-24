@@ -1,6 +1,6 @@
 <template>
     <div class="wholePage">
-        <h1 style="font-size: 46px;">Leaderboard</h1>
+        <h1 style="font-size: 46px;">{{ $t('header.leaderboard') }}</h1>
         <div v-for="(u, index) in leaderboard">
             <h1>{{ index + 1 }}</h1>
             <a>{{ u }}</a>
