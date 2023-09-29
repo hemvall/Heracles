@@ -94,7 +94,7 @@ export default defineComponent({
                     this.fetchData()
                 })
                 .then(data => {
-                    localStorage.setItem('userName', data.name)
+                    localStorage.setItem('userName', data.username)
                     localStorage.setItem('userMail', data.mail)
                     localStorage.setItem('userId', data.id)
                     location.reload()
@@ -111,7 +111,7 @@ export default defineComponent({
                     password: this.signupPassword,
                 })
             };
-            fetch(`${this.$api}/Users`, requestOptions)
+            fetch(`${this.$api}/Users/Authentification`, requestOptions)
                 .then(response => {
                     if (response.ok) {
                         alert("Votre compte a bien été crée, vous pouvez vous connecter")
@@ -121,7 +121,7 @@ export default defineComponent({
                     this.fetchData()
                 })
                 .then(data => {
-                    localStorage.setItem('userName', data.name)
+                    localStorage.setItem('userName', data.username)
                     localStorage.setItem('userMail', data.mail)
                     localStorage.setItem('userId', data.id)
                     location.reload()

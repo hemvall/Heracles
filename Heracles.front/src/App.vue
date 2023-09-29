@@ -42,23 +42,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 :root {
-    --background-color: #fff;
-    --text-color: #121416d8;
-    --link-color: #543fd7;
+  --background-color: #fff;
+  --text-color: #121416d8;
+  --link-color: #543fd7;
 }
 
 html[data-theme='light'] {
-    --background-color: #fff;
-    --text-color: #121416d8;
-    --link-color: #543fd7;
+  --background-color: #fff;
+  --text-color: #121416d8;
+  --link-color: #543fd7;
 }
 
 html[data-theme='dark'] {
-    --background-color: #212a2e;
-    --text-color: #F7F8F8;
-    --link-color: #242741;
+  --background-color: #212a2e;
+  --text-color: #F7F8F8;
+  --link-color: #242741;
 }
 
 * {

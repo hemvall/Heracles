@@ -2,8 +2,9 @@ using heracles_api.Context;
 using Heracles.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-/*using BCrypt.Net;
-*/
+using BCrypt.Net;
+
+
 namespace Users.Controllers
 {
     [Route("[controller]")]
@@ -16,7 +17,18 @@ namespace Users.Controllers
         {
             _heraclesContext = heraclesContext;
         }
-        
+
+        static string HashPassword(string password)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password);
+        }
+
+        static bool VerifyPassword(string password, string hashedPassword)
+        {
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+        }
+
+
         [HttpGet("{id:int}", Name = "GetUsers")]
         public ActionResult<User> Get(int id)
         {
@@ -43,27 +55,54 @@ namespace Users.Controllers
             return emails is null ? NotFound() : emails;
         }
 
-
         [HttpPost("Authentification")]
-        public ActionResult<User> Authentification(User ex)
+        public ActionResult<User> Authenticate(User loginUser)
         {
-            if (ex is null) return BadRequest();
+            if (loginUser == null)
+            {
+                return BadRequest("Invalid login data.");
+            }
 
-            User usr = _heraclesContext.Users.FirstOrDefault(x => x.Mail == ex.Mail && x.Password == ex.Password);
+            // Find the user by email (or username) in the database
+            User user = _heraclesContext.Users.FirstOrDefault(x => x.Mail == loginUser.Mail);
 
-            if (usr is null) return NotFound();
+            if (user == null)
+            {
+                // User not found
+                return NotFound("User not found.");
+            }
 
-            return usr;
+            // Verify the entered password against the stored hashed password
+            if (BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password))
+            {
+                // Password is correct, you can return the user's data here
+                return user;
+            }
+            else
+            {
+                // Password is incorrect
+                return Unauthorized("Incorrect password.");
+            }
         }
 
-        [HttpPost]
-        public ActionResult<User> Post(User ex)
+
+
+        [HttpPost("Register")]
+        public ActionResult<User> Register(User newUser)
         {
-            if(ex is null) return BadRequest();
-            
+            if (newUser == null)
+            {
+                return BadRequest("Invalid user data.");
+            }
+
+            // Hash the user's password before saving it to the database
+            newUser.Password = HashPassword(newUser.Password);
+
+            _heraclesContext.Users.Add(newUser);
             _heraclesContext.SaveChanges();
 
-            return new CreatedAtRouteResult("GetUser", new { id = ex.Id, ex});
+            // Return the newly created user
+            return new CreatedAtRouteResult("GetUser", new { id = newUser.Id }, newUser);
         }
 
         [HttpPut("{id:int}")]

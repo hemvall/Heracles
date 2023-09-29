@@ -1,13 +1,12 @@
 <template>
     <div class="wholePage">
         <h1 style="font-size: 46px;">{{ $t('header.leaderboard') }}</h1>
-        <div v-for="(u, index) in leaderboard">
+        <div v-for="(u, index) in leaderboard" :key="u">
             <h1>{{ index + 1 }}</h1>
             <a>{{ u }}</a>
         </div>
     </div>
 </template>
-
 
 <script lang="js">
 import { defineComponent } from 'vue';

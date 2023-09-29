@@ -12,7 +12,9 @@
 
                 <a class="statBlock">
                     <h2>{{ $t('Dashboard.Rank') }}</h2>
-                    <h1 class="statRank" style="color:#9F8548">12</h1>
+                    <h1 class="statRank" style="color:#9F8548">
+                        {{ userRank }}
+                    </h1>
                     <h2 class="statLink" @click="$router.push('/leaderboard')">> {{ $t('Dashboard.Leaderboard') }}</h2>
 
                 </a>
@@ -53,6 +55,7 @@ export default defineComponent({
             user: {},
             top3: {},
             totalScore: {},
+            leaderboard: [],
             exercises: [],
             performances: [],
             idUser: 0
@@ -60,11 +63,20 @@ export default defineComponent({
     },
     methods: {
         fetchData() {
+            this.leaderboard = [];
             this.exercises = [];
             this.performances = [];
             this.user = {};
             this.top3 = {};
             this.loading = true;
+
+            fetch(`${this.$api}/leaderboard`)
+                .then(r => r.json())
+                .then(json => {
+                    this.leaderboard = json;
+                    this.loading = false;
+                    return;
+                });
 
             fetch(`${this.$api}/users/${localStorage.getItem("userId")}`)
                 .then(r => r.json())
@@ -139,7 +151,17 @@ export default defineComponent({
             }
 
             return uniquePerformances;
-        }
+        },
+        userRank() {
+            const userName = localStorage.getItem('userName');
+            const userIndex = this.leaderboard.findIndex(u => u == localStorage.getItem('userName'));
+            
+            if (userIndex >= 0) {
+                return userIndex + 1;
+            } else {
+                return 'N/A';
+            }
+        },
     }
 }
 );

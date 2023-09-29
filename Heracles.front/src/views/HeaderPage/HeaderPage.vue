@@ -43,7 +43,7 @@ export default defineComponent({
         clear() {
             console.log("aa")
             window.localStorage.clear()
-        }
+        },
     }
 }
 );
