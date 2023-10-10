@@ -154,7 +154,7 @@ export default defineComponent({
         },
         userRank() {
             const userName = localStorage.getItem('userName');
-            const userIndex = this.leaderboard.findIndex(u => u == localStorage.getItem('userName'));
+            const userIndex = this.leaderboard.findIndex(u => u.username == localStorage.getItem('userName'));
             
             if (userIndex >= 0) {
                 return userIndex + 1;

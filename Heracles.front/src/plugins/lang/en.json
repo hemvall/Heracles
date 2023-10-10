@@ -33,6 +33,7 @@
       "MainTitle": "My exercises",
       "AddCateg": "Add a category",
       "AddExercise": "Add an exercise",
+      "AddSet": "Add a set",
       "ErrorExercise": "No exercise found"
     },
     "exerciseDetail": {

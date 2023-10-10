@@ -3,7 +3,7 @@
         <h1 style="font-size: 46px;">{{ $t('header.leaderboard') }}</h1>
         <div v-for="(u, index) in leaderboard" :key="u">
             <h1>{{ index + 1 }}</h1>
-            <a>{{ u }}</a>
+            <a>{{ u.username }} {{ u.totalScore }}pts</a>
         </div>
     </div>
 </template>

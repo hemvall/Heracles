@@ -56,7 +56,7 @@ namespace Performances.Controllers
             _heraclesContext.Performances?.Add(perf);
             _heraclesContext.SaveChanges();
 
-            return new CreatedAtRouteResult("GePerformance", new { id = perf.Id, perf});
+            return new CreatedAtRouteResult("GetPerformance", new { id = perf.Id});
         }
 
         [HttpPut("{id:int}")]

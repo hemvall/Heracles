@@ -44,11 +44,10 @@ namespace Users.Controllers
         }
 
         [HttpGet("/Leaderboard")]
-        public ActionResult<IEnumerable<string>> Leaderboard()
+        public ActionResult<IEnumerable<User>> Leaderboard()
         {
             var emails = _heraclesContext.Users
                 ?.OrderByDescending(x => x.TotalScore)
-                .Select(x => x.Username)
                 .AsNoTracking()
                 .ToList();
 
@@ -63,24 +62,19 @@ namespace Users.Controllers
                 return BadRequest("Invalid login data.");
             }
 
-            // Find the user by email (or username) in the database
             User user = _heraclesContext.Users.FirstOrDefault(x => x.Mail == loginUser.Mail);
 
             if (user == null)
             {
-                // User not found
                 return NotFound("User not found.");
             }
 
-            // Verify the entered password against the stored hashed password
             if (BCrypt.Net.BCrypt.Verify(loginUser.Password, user.Password))
             {
-                // Password is correct, you can return the user's data here
                 return user;
             }
             else
             {
-                // Password is incorrect
                 return Unauthorized("Incorrect password.");
             }
         }

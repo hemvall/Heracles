@@ -1,17 +1,37 @@
 <template>
     <div class="container" v-if="formPerformanceOpen">
         <div class="form">
-            <h2>{{ $t('Exercises.Addperf') }}</h2>
+            <h2>{{ $t('exerciseDetail.AddPerf') }}</h2>
             <form>
-                <p>{{ $t('exercisesDetail.Date') }}</p>
-                <input v-model="perfDate" type="date" />
-                <p>{{ $t('exerciseDetail.Perf') }}</p>
-                <input v-model="Weight" type="number" /> <a>{{ exercise.unit }}</a>
-                <p>{{ $t('exerciseDetail.Reps') }}</p>
-                <input v-model="Reps" type="number" />
-                <p>{{ $t('exerciseDetail.Sets') }}</p>
-                <input v-model="Sets" type="number" /><br><br>
-                <button @click="createPerformance" class="formConfirm">{{ $t('exerciseDetail.Addperf') }}</button>
+                <p>{{ $t('exerciseDetail.Date') }}</p>
+                <input v-model="perfDate" type="date" /><br><br>
+                <div>
+                    <hr>
+                    <div class="set" style="display: flex; justify-content: space-around;">
+                        <p>{{ $t('exerciseDetail.Reps') }}</p>
+                        <p>{{ $t('exerciseDetail.Weight') }}</p>
+                    </div>
+                </div>
+                <div class="set" style="display: flex;">
+                    <input v-model="Set1" class="flexInput" type="number" /> x
+                    <input v-model="Weight1" class="flexInput" type="number" />
+                </div>
+                <div class="set" style="display: flex;">
+                    <input v-model="Set2" class="flexInput" type="number" /> x
+                    <input v-model="Weight2" class="flexInput" type="number" />
+                </div>
+                <div class="set" style="display: flex;">
+                    <input v-model="Set3" class="flexInput" type="number" /> x
+                    <input v-model="Weight3" class="flexInput" type="number" />
+                </div>
+                <div class="set" style="display: flex;">
+                    <input v-model="Set4" class="flexInput" type="number" /> x
+                    <input v-model="Weight4" class="flexInput" type="number" />
+                </div>
+                <br>
+                <!-- <a class="addSet">+ {{ $t('exercisesPage.AddSet') }}</a> -->
+                <hr><br>
+                <button @click="createPerformance, createSet1, createSet2, createSet3, createSet4" class="formConfirm">{{ $t('confirm') }}</button>
                 <button @click="formPerformanceOpen = !formPerformanceOpen" class="formReturn">{{ $t('close') }}</button>
             </form>
         </div>
@@ -19,10 +39,12 @@
     <div class="wholePage">
         <div class="typeBlock">
             <h1>{{ exercise.label }}</h1>
-            <h2>{{ $t('Dashboard.PR') }}: {{ highestWeightPerformance ? highestWeightPerformance.weight + ' ' + exercise.unit : 'N/A' }}
+            <h2>{{ $t('Dashboard.PR') }}: {{ highestWeightPerformance ? highestWeightPerformance.weight + ' ' +
+                exercise.unit : 'N/A' }}
             </h2>
             <a class="returnButton" @click="$router.go(-1)">{{ $t('return') }}</a>
-            <a class="button" style="margin-left: 0%;" @click="formPerformanceOpen = !formPerformanceOpen">{{ $t('exerciseDetail.AddPerf') }}</a>
+            <a class="button" style="margin-left: 0%;" @click="formPerformanceOpen = !formPerformanceOpen">{{
+                $t('exerciseDetail.AddPerf') }}</a>
             <table>
                 <thead>
                     <th>{{ $t('exerciseDetail.Date') }}</th>
@@ -63,10 +85,16 @@ export default defineComponent({
             formPerformanceOpen: false,
             editPerfOpen: false,
             UserId: 1,
+            performanceId: 0,
             perfDate: new Date().toISOString(),
-            Weight: 0,
-            Reps: 0,
-            Sets: 0,
+            Weight1: 0,
+            Weight2: 0,
+            Weight3: 0,
+            Weight4: 0,
+            Set1: 12,
+            Set2: 12,
+            Set3: 12,
+            Set4: 12,
             Score: 0,
         };
     },
@@ -101,11 +129,8 @@ export default defineComponent({
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     ExerciseId: this.$route.params.exerciseId,
-                    UserId: this.UserId,
+                    UserId: localStorage.getItem('userId'),
                     Date: this.perfDate,
-                    Weight: this.Weight,
-                    Reps: this.Reps,
-                    Sets: this.Sets,
                     Score: this.Score
                 })
             };
@@ -116,7 +141,102 @@ export default defineComponent({
                     this.fetchData()
                 })
                 .then(response => response.json())
-            // .then(data => (this.postId = data.id));
+                .then(response => {
+                    console.log(response)
+                    this.performanceId = response
+                })
+        },
+        createSet1() {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    UserId: localStorage.getItem('userId'),
+                    Reps: this.Set1,
+                    Weight: this.Weight1,
+                    PerfId: this.performanceId
+                })
+            };
+            fetch(`${this.$api}/sets`, requestOptions)
+                .then(response => {
+                    if (response.ok) { console.log("La série a bien été ajoutée"); this.formPerformanceOpen = false }
+                    else { alert("Erreur. La série n'a pas été ajoutée") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    this.performanceId = response
+                })
+        },
+        createSet2() {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    UserId: localStorage.getItem('userId'),
+                    Reps: this.Set2,
+                    Weight: this.Weight2,
+                    PerfId: this.performanceId
+                })
+            };
+            fetch(`${this.$api}/sets`, requestOptions)
+                .then(response => {
+                    if (response.ok) { console.log("La série a bien été ajoutée"); this.formPerformanceOpen = false }
+                    else { alert("Erreur. La série n'a pas été ajoutée") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    this.performanceId = response
+                })
+        },
+        createSet3() {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    UserId: localStorage.getItem('userId'),
+                    Reps: this.Set3,
+                    Weight: this.Weight3,
+                    PerfId: this.performanceId
+                })
+            };
+            fetch(`${this.$api}/sets`, requestOptions)
+                .then(response => {
+                    if (response.ok) { console.log("La série a bien été ajoutée"); this.formPerformanceOpen = false }
+                    else { alert("Erreur. La série n'a pas été ajoutée") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    this.performanceId = response
+                })
+        },
+        createSet4() {
+            const requestOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    UserId: localStorage.getItem('userId'),
+                    Reps: this.Set4,
+                    Weight: this.Weight4,
+                    PerfId: this.performanceId
+                })
+            };
+            fetch(`${this.$api}/sets`, requestOptions)
+                .then(response => {
+                    if (response.ok) { console.log("La série a bien été ajoutée"); this.formPerformanceOpen = false }
+                    else { alert("Erreur. La série n'a pas été ajoutée") }
+                    this.fetchData()
+                })
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    this.performanceId = response
+                })
         },
         editPerformance(pId) {
             const requestOptions = {
@@ -190,12 +310,16 @@ button {
     justify-content: center;
 }
 
+.flexInput {
+    margin: 0 2%;
+}
+
 .form {
     position: fixed;
     z-index: 10;
     background-color: #141010;
-    height: 70%;
     width: 70%;
+    height: 77%;
     padding: 1% 8%;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -209,5 +333,32 @@ button {
     margin-bottom: 10px;
     width: 100%;
     padding: 10px;
+}
+
+.set {
+    margin-bottom: 1%;
+}
+
+.addSet {
+    color: #9f8548;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.addSet:hover {
+    color: #ccc;
+}
+
+.btnSet {
+    white-space: nowrap;
+    border: solid 2px #9f8548;
+    border-radius: 5px;
+    padding: 0 2%;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.btnSet:hover {
+    background-color: #9f8548;
 }
 </style>

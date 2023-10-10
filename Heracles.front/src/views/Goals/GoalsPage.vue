@@ -3,11 +3,16 @@
         <div class="subHeader">
             <div class="subHeaderCont">
                 <div class="subHeadStates">
-                    <a v-if="tabindex == 1" class="state stateFocus leftBtns">{{ $t('Goals.Open') }} ({{ goalsActive.length }}) </a>
-                    <a v-else class="state leftBtns" @click="tabindex = 1">{{ $t('Goals.Open') }} ({{ goalsActive.length }}) </a>
-                    <a v-if="tabindex == 2" class="state stateFocus leftBtns">{{ $t('Goals.Closed') }} ({{ goalsnActive.length }}) </a>
-                    <a v-else class="state leftBtns" @click="tabindex = 2">{{ $t('Goals.Closed') }} ({{ goalsnActive.length }}) </a>
-                    <a v-if="tabindex == 3" class="state stateFocus leftBtns">{{ $t('Goals.All') }} ({{ goals.length }}) </a>
+                    <a v-if="tabindex == 1" class="state stateFocus leftBtns">{{ $t('Goals.Open') }} ({{ goalsActive.length
+                    }}) </a>
+                    <a v-else class="state leftBtns" @click="tabindex = 1">{{ $t('Goals.Open') }} ({{ goalsActive.length }})
+                    </a>
+                    <a v-if="tabindex == 2" class="state stateFocus leftBtns">{{ $t('Goals.Closed') }} ({{
+                        goalsnActive.length }}) </a>
+                    <a v-else class="state leftBtns" @click="tabindex = 2">{{ $t('Goals.Closed') }} ({{ goalsnActive.length
+                    }}) </a>
+                    <a v-if="tabindex == 3" class="state stateFocus leftBtns">{{ $t('Goals.All') }} ({{ goals.length }})
+                    </a>
                     <a v-else class="state leftBtns" @click="tabindex = 3">{{ $t('Goals.All') }} ({{ goals.length }}) </a>
                     <!-- <a class="state btnGoal">Add a goal </a> -->
                 </div>
@@ -26,9 +31,12 @@
                             class="closeGoal">{{ $t('Goals.CloseGoal') }}</a>
                     </div>
                     <div class="layer">
-                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} <a
-                                v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
-                        <div class="goalData"><a class="dataTxt">X {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X% {{ $t('Goals.Complete') }}</a>
+                        <a class="goalDeadline">
+                            <!-- {{ g.startingDate }} -> {{ g.deadline }} -->
+                             <a
+                                v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> {{ dLeft }}</a></a>
+                        <div class="goalData"><a class="dataTxt">{{ performancesFromGoal(g.id).length }} {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X%
+                                {{ $t('Goals.Complete') }}</a>
                         </div>
                     </div>
                 </div>
@@ -47,9 +55,11 @@
                         <progress value="60" max="100" class="goalProgress"></progress>
                     </div>
                     <div class="layer">
-                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }}<a
-                                v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
-                        <div class="goalData"><a class="dataTxt">X {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X% {{ $t('Goals.Complete') }}</a>
+                        <a class="goalDeadline">
+                            <!-- {{ g.startingDate }} -> {{ g.deadline }} -->
+                            <a v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> {{ dLeft }}</a></a>
+                        <div class="goalData"><a class="dataTxt">{{ performancesFromGoal(g.id).length }} {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X%
+                                {{ $t('Goals.Complete') }}</a>
                         </div>
                     </div>
                 </div>
@@ -66,9 +76,11 @@
                         <a v-if="g.isActive" class="closeGoal">{{ $t('Goals.CloseGoal') }}</a>
                     </div>
                     <div class="layer">
-                        <a class="goalDeadline">{{ g.startingDate }} -> {{ g.deadline }} <a
-                                v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> ({{ dLeft }})</a></a>
-                        <div class="goalData"><a class="dataTxt">X {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X% {{ $t('Goals.Complete') }}</a>
+                        <a class="goalDeadline">
+                            <!-- {{ g.startingDate }} -> {{ g.deadline }}  -->
+                            <a v-for="dLeft in daysLeft(g.startingDate, g.deadline)" :key="dLeft"> {{ dLeft }}</a></a>
+                        <div class="goalData"><a class="dataTxt">{{ performancesFromGoal(g.id).length }} {{ $t('Goals.Records') }}</a> &#183 <a class="dataTxt">X%
+                                {{ $t('Goals.Complete') }}</a>
                         </div>
                     </div>
                 </div>
@@ -91,6 +103,7 @@ export default defineComponent({
         return {
             goals: [],
             exercises: [],
+            performances: [],
             userId: 99,
             tabindex: 1,
             label: '',
@@ -104,6 +117,7 @@ export default defineComponent({
         fetchData() {
             this.exercises = [];
             this.goals = [];
+            this.performances = [];
             this.loading = true;
 
             fetch(`${this.$api}/goals`)
@@ -120,9 +134,19 @@ export default defineComponent({
                     this.loading = false;
                     return;
                 });
+            fetch(`${this.$api}/performances`)
+                .then(r => r.json())
+                .then(json => {
+                    this.performances = json;
+                    this.loading = false;
+                    return;
+                });
         },
         exercisesFromType(tId) {
             return this.exercises.filter(e => e.typeId == tId && e.userId == localStorage.getItem('userId'))
+        },
+        performancesFromGoal(gId) {
+            return this.performances.filter(e => e.goalId == gId && e.userId == localStorage.getItem('userId'))
         },
         closeGoal(gId, uId, eId, lbl, dta, sd, dl, isA) {
             if (confirm("Do you really want to close this goal ?")) {
@@ -142,8 +166,8 @@ export default defineComponent({
                 };
                 fetch(`${this.$api}/goals/${gId}`, requestOptions)
                     .then(response => {
-                        if (response.ok) { alert("L'objectif a bien été fermé.") }
-                        else { alert("L'objectif a bien été fermé.") }
+                        if (response.ok) { console.log('objectif fermé') }
+                        else { alert("Erreur. L'objectif n'a pas été fermé.") }
                         this.fetchData()
                     })
                     .then(response => response.json())
@@ -170,7 +194,7 @@ export default defineComponent({
         },
         goalsnActive() {
             return this.goals.filter(e => !e.isActive)
-        },
+        }
     }
 }
 );

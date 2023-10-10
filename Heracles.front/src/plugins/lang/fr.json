@@ -32,6 +32,7 @@
   "exercisesPage": {
     "MainTitle": "Mes exercices",
     "AddCateg": "Ajouter une catégorie",
+    "AddSet": "Ajouter une série",
     "AddExercise": "Ajouter un exercice",
     "ErrorExercise": "Aucune performance n'a chargé"
   },
@@ -41,6 +42,7 @@
     "Perf": "Performance",
     "Reps": "Nombre de repétitions",
     "Sets": "Nombre de séries",
+    "Weight": "Nombre de kg",
     "Score": "Score"
   },
   "Dashboard": {
