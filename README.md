@@ -14,9 +14,7 @@ A REST API and front-end application built with **.NET 6** and **Vue 3**, design
 
 - **Backend:** .NET 6 (ASP.NET Core Web API)
 - **Frontend:** Vue 3
-- **Database:** [Add your database type here, e.g., SQL Server, MongoDB]
-- **Authentication:** [Optional, e.g., JWT, OAuth]
-- **Other tools:** [Any additional libraries or frameworks used]
+- **Database:** MySQL
 
 ## Installation
 
