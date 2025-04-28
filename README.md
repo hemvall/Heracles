@@ -1,6 +1,5 @@
 # Sports Performance Tracker
 
-a
 A REST API and front-end application built with **.NET 6** and **Vue 3**, designed to help users record and monitor their gym, running, and boxing performances. Easily store and track your sports progression to improve your fitness goals!
 
 ## Features
